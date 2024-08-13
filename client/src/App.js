@@ -5,8 +5,8 @@ import Home from './pages/Home';
 
 function App() {
   return (
-    <div className='flex items-center justify-center w-screen'>
-      <div className='container'>
+    <div className='flex items-center justify-center w-screen h-screen'>
+      <div className='container relative h-full'>
           <Header/>
           <main>
             <Home/>
