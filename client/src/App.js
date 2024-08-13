@@ -5,10 +5,14 @@ import Home from './pages/Home';
 
 function App() {
   return (
-    <div>
-        <Header/>
-        <Home/>
-        <Footer/>
+    <div className='flex items-center justify-center w-screen'>
+      <div className='container'>
+          <Header/>
+          <main>
+            <Home/>
+          </main>
+          <Footer/>
+      </div>
     </div>
   );
 }
