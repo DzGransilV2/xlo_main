@@ -15,7 +15,7 @@ module.exports = {
         myShadow:"-4px 4px 4px rgb(204 204 204 / 25%)"
       },
       backgroundImage:{
-        myBackground:"linear-gradient(360deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.9) 40%,rgb(255, 255, 255) 100%)"
+        myBackground:"linear-gradient(360deg, rgba(255,255,255,0) 20%, rgb(255, 255, 255) 40%)"
       }
     },
   },
