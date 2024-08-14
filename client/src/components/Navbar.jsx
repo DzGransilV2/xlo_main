@@ -3,7 +3,7 @@ import { ReactComponent as HomeIcon } from '../assets/svg/HomeSVG.svg';
 import { ReactComponent as LocationIcon } from '../assets/svg/LocationSVG.svg';
 import { ReactComponent as CategoriesIcon } from '../assets/svg/CategoriesSVG.svg';
 import { ReactComponent as UserIcon } from '../assets/svg/UserSVG.svg';
-import '../styles/navbar.css'; // Import your CSS file
+import '../styles/navbar.css';
 
 const Navbar = () => {
   return (

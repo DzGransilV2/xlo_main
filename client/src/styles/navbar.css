@@ -1,11 +1,13 @@
 /* navbar.css */
 .navbar {
+  box-shadow: none;
   width: 65px; /* Initial width to fit only icons */
-  transition: width 0.3s ease-in-out; /* Smooth width transition */
+  transition: width 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth width transition */
 }
 
 .navbar:hover {
   width: auto; /* Expand width to fit text labels on hover */
+  box-shadow: -4px 4px 4px rgb(204 204 204 / 25%);
 }
 
 .nav-item {
