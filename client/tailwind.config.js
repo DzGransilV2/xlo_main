@@ -9,6 +9,7 @@ module.exports = {
       },
       colors:{
         myGrey:"#DADADA",
+        myPriceTag:"#EBEBEB",
       },
       boxShadow:{
         myShadow:"-4px 4px 4px rgb(204 204 204 / 25%)"
