@@ -10,7 +10,7 @@ function App() {
       <div className='container  h-full'>
           <Header/>
           <main className='flex gap-5' style={{minHeight:"calc(100% - 13.0625rem - 2.5rem)"}}>
-            <section><Navbar/></section>
+            <aside><Navbar/></aside>
             <section className='w-full'><Home/></section>
           </main>
           <Footer/>

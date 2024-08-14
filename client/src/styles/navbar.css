@@ -1,42 +1,29 @@
 /* navbar.css */
 .navbar {
-  background-color: #f0f0f0; /* Customize as needed */
-  border-radius: 10px; /* Customize as needed */
-  width: fit-content;
-  padding: 10px; /* Adjust padding as needed */
-  position: relative; /* Necessary for absolute positioning of child elements */
-  overflow: hidden; /* Ensure text doesn't overflow */
-  transition: width 0.3s ease-in-out; /* Smooth transition for width */
-}
-
-.nav-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative; /* Positions the text label absolutely within this item */
-}
-
-.nav-text {
-  opacity: 0;
-  visibility: hidden;
-  display: none;
-  transform: translateX(20px); /* Initially hide text off-screen */
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
+  width: 65px; /* Initial width to fit only icons */
+  transition: width 0.3s ease-in-out; /* Smooth width transition */
 }
 
 .navbar:hover {
   width: auto; /* Expand width to fit text labels on hover */
 }
 
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adjust gap as needed */
+}
+
+.nav-text {
+  max-width: 0; /* Initially hide text */
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap; /* Prevent text from wrapping */
+  transition: max-width 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Smooth transitions */
+}
+
+/* Ensure the text becomes visible on hover */
 .navbar:hover .nav-text {
+  max-width: 100px; /* Adjust this value based on the length of your longest label */
   opacity: 1;
-  visibility: visible;
-  display: block;
-  transform: translateX(0); /* Slide text into view */
 }
