@@ -16,6 +16,9 @@ module.exports = {
       },
       backgroundImage:{
         myBackground:"linear-gradient(360deg, rgba(255,255,255,0) 20%, rgb(255, 255, 255) 40%)"
+      },
+      borderRadius:{
+        myRound:"0.625rem"
       }
     },
   },

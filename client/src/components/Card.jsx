@@ -3,7 +3,7 @@ import { ReactComponent as SaveIcon } from '../assets/svg/SaveSVG.svg';
 
 const Card = () => {
     return (
-        <div className='h-[18.75rem] w-[18rem] relative overflow-hidden rounded-[0.625rem] hover:shadow-myShadow'>
+        <div className='h-[18.75rem] w-[18rem] relative overflow-hidden rounded-myRound hover:shadow-myShadow'>
             <div className='bg-slate-600 w-full flex items-center justify-center overflow-hidden' style={{ height: 'calc(18.75rem - 5.7rem)' }}>
                 <div className='absolute top-5 right-5 bg-myGrey rounded-full h-[1.875rem] w-[1.875rem] flex items-center justify-center'>
                     <SaveIcon height={24} width={24} />
@@ -16,7 +16,7 @@ const Card = () => {
                         <span className='h-[1.875rem] flex items-center justify-center absolute top-[5%]'>₹000000</span>
                     </div>
                 </div>
-                <div className='w-full h-[6.25rem] absolute top-[34.9%] bg-myGrey rounded-[0.625rem] px-5 py-[0.625rem] flex flex-col gap-2'>
+                <div className='w-full h-[6.25rem] absolute top-[34.9%] bg-myGrey rounded-myRound px-5 py-[0.625rem] flex flex-col gap-2'>
                     <span className='font-bold text-base'>Title...</span>
                     <span className='font-normal text-base'>Location...</span>
                     <span className='font-thin text-xs self-end'>5 Days Ago</span>
