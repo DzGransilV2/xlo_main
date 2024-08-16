@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Navbar from './components/Navbar';
 import CardDetails from './pages/CardDetails';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
             <aside className='w-[12.5rem]'><Navbar/></aside>
             <section className='w-full mx-5 mb-[6.25rem]'>
               {/* <Home/> */}
-              <CardDetails/>
+              {/* <CardDetails/> */}
+              <Profile/>
             </section>
           </main>
           <Footer/>
