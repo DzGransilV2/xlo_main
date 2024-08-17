@@ -1,4 +1,5 @@
 import React from 'react'
+import Form from '../components/Form'
 
 const Post = () => {
     return (
@@ -6,6 +7,7 @@ const Post = () => {
             <div className='container h-full flex flex-col'>
                 <span>Post your Ad</span>
                 <span>Cars, Mobiles and Bikes</span>
+                <Form/>
             </div>
         </div>
     )
