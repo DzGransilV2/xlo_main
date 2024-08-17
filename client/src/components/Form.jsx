@@ -253,84 +253,91 @@ const Form = () => {
 
     return (
         /* From Uiverse.io by themrsami */
-        <div className="flex flex-col items-center justify-center h-screen">
-            <div className="w-full max-w-md bg-myGrey rounded-myRound shadow-md p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">POST</h2>
-                <form className="flex flex-col">
-                    <input placeholder="Title" className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
-                    <input placeholder="Brand" className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
-                    <input placeholder="Price" className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
-                    {/* <input placeholder="Location" className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text"/> */}
-                    <label className="text-sm mb-2 text-gray-900 cursor-pointer" htmlFor="fuel">
-                        Fuel
-                    </label>
-                    <select className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="fuel">
-                        <option value="" disabled selected>None</option>
-                        <option value="CNG_&_Hybrids">CNG & Hybrids</option>
-                        <option value="Diesel">Diesel</option>
-                        <option value="Electric">Electric</option>
-                        <option value="LPG">LPG</option>
-                        <option value="Petrol">Petrol</option>
-                    </select>
-                    <label className="text-sm mb-2 text-gray-900 cursor-pointer" htmlFor="transmission">
-                        Transmission
-                    </label>
-                    <select className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="transmission">
-                        <option value="" disabled selected>None</option>
-                        <option value="automatic">Automatic</option>
-                        <option value="manual">Manual</option>
-                    </select>
-                    <label className="text-sm mb-2 text-gray-900 cursor-pointer" htmlFor="owner">
-                        Owner
-                    </label>
-                    <select className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="owner">
-                        <option value="" disabled selected>None</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="5+">5+</option>
-                    </select>
-                    <input placeholder="Mileage (KM Driven)" className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
-                    <label className="text-sm mb-2 text-gray-900 cursor-pointer" id='location'>Location</label>
-                    <select onChange={handleStateChange} value={selectedState} className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="location">
-                        <option value="" disabled selected>Choose your state</option>
-                        {Object.keys(stateCityMapping).map((state) => (
-                            <option key={state} value={state}>
-                                {state}
-                            </option>
-                        ))}
-                    </select>
-                    {
-                        selectedState && (
-                            <select  onChange={handleStateChange2} value={selectedCity} className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
-                                <option value="" disabled selected>Choose your city</option>
-                                {Object.keys(cities).map((city) => (
-                                    <option key={city} value={city}>
-                                        {city}
+        <div className="flex flex-col items-center justify-center h-fit">
+            <div className="w-full max-w-xl bg-myGrey rounded-myRound shadow-myShadow p-6">
+                <h2 className="text-2xl font-bold mb-4">POST your CAR</h2>
+                <form className="flex flex-col w-full">
+                    <div className='flex w-full gap-5'>
+                        <div className='flex flex-col w-1/2'>
+                            <input placeholder="Title" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
+                            <input placeholder="Brand" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
+                            <textarea placeholder='Description' className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"></textarea>
+                            <input placeholder="Mileage (KM Driven)" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
+                            <input placeholder="Price" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
+                        </div>
+                        {/* <input placeholder="Location" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text"/> */}
+                        <div className='flex flex-col w-1/2'>
+                            <label className="text-sm mb-2  cursor-pointer" htmlFor="fuel">
+                                Fuel
+                            </label>
+                            <select className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="fuel">
+                                <option value="" disabled selected>None</option>
+                                <option value="CNG_&_Hybrids">CNG & Hybrids</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="Electric">Electric</option>
+                                <option value="LPG">LPG</option>
+                                <option value="Petrol">Petrol</option>
+                            </select>
+                            <label className="text-sm mb-2  cursor-pointer" htmlFor="transmission">
+                                Transmission
+                            </label>
+                            <select className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="transmission">
+                                <option value="" disabled selected>None</option>
+                                <option value="automatic">Automatic</option>
+                                <option value="manual">Manual</option>
+                            </select>
+                            <label className="text-sm mb-2  cursor-pointer" htmlFor="owner">
+                                Owner
+                            </label>
+                            <select className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="owner">
+                                <option value="" disabled selected>None</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="5+">5+</option>
+                            </select>
+                            <label className="text-sm mb-2  cursor-pointer" id='location'>Location</label>
+                            <select onChange={handleStateChange} value={selectedState} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="location">
+                                <option value="" disabled selected>Choose your state</option>
+                                {Object.keys(stateCityMapping).map((state) => (
+                                    <option key={state} value={state}>
+                                        {state}
                                     </option>
                                 ))}
                             </select>
-                        )
-                    }
-                    {
-                        selectedCity && (
-                            <select className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
-                                <option value="" disabled selected>Choose your neighbourhood</option>
-                                {neighbourhood.map((neighbourhood) => (
-                                    <option key={neighbourhood} value={neighbourhood}>
-                                        {neighbourhood}
-                                    </option>
-                                ))}
-                            </select>
-                        )
-                    }
-                    <label className="text-sm mb-2 text-gray-900 cursor-pointer" htmlFor="manufactured">
-                        Manufactured
-                    </label>
-                    <input className="bg-gray-100 text-gray-900 border-0 rounded-md p-2" id="manufactured" type="date" />
-                    {/* <p className="text-gray-900 mt-4"> Already have an account? <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="#">Login</a></p> */}
+                            {
+                                selectedState && (
+                                    <select  onChange={handleStateChange2} value={selectedCity} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                        <option value="" disabled selected>Choose your city</option>
+                                        {Object.keys(cities).map((city) => (
+                                            <option key={city} value={city}>
+                                                {city}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )
+                            }
+                            {
+                                selectedCity && (
+                                    <select className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                        <option value="" disabled selected>Choose your neighbourhood</option>
+                                        {neighbourhood.map((neighbourhood) => (
+                                            <option key={neighbourhood} value={neighbourhood}>
+                                                {neighbourhood}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )
+                            }
+                            <label className="text-sm mb-2  cursor-pointer" htmlFor="manufactured">
+                                Manufactured
+                            </label>
+                            <input className="bg-gray-100  border-0 rounded-md p-2" id="manufactured" type="date" />
+                        </div>
+                    </div>
+                    {/* <p className=" mt-4"> Already have an account? <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="#">Login</a></p> */}
                     <button className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150" type="submit">Upload</button>
                 </form>
             </div>
