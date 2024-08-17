@@ -4,6 +4,8 @@ const Form = () => {
 
     const [selectedState, setSelectedState] = useState("");
     const [cities, setCities] = useState([]);
+    const [selectedCity, setSelectedCity] = useState("");
+    const [neighbourhood, setNeighbourhood] = useState([]);
 
     const stateCityMapping = {
         "Andhra Pradesh": {
@@ -240,6 +242,12 @@ const Form = () => {
         setCities(stateCityMapping[state] || []);
     };
 
+    const handleStateChange2 = (e) => {
+        const city = e.target.value;
+        setSelectedCity(city);
+        setNeighbourhood(cities[city] || []);
+    };
+
     // console.warn(cities)
 
 
@@ -296,11 +304,23 @@ const Form = () => {
                     </select>
                     {
                         selectedState && (
-                            <select className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                            <select  onChange={handleStateChange2} value={selectedCity} className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
                                 <option value="" disabled selected>Choose your city</option>
                                 {Object.keys(cities).map((city) => (
                                     <option key={city} value={city}>
                                         {city}
+                                    </option>
+                                ))}
+                            </select>
+                        )
+                    }
+                    {
+                        selectedCity && (
+                            <select className="bg-gray-100 text-gray-900 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                <option value="" disabled selected>Choose your neighbourhood</option>
+                                {neighbourhood.map((neighbourhood) => (
+                                    <option key={neighbourhood} value={neighbourhood}>
+                                        {neighbourhood}
                                     </option>
                                 ))}
                             </select>
