@@ -15,8 +15,8 @@ function App() {
             <aside className='w-[12.5rem]'><Navbar/></aside>
             <section className='w-full mx-5 mb-[6.25rem]'>
               {/* <Home/> */}
-              {/* <CardDetails/> */}
-              <Profile/>
+              <CardDetails/>
+              {/* <Profile/> */}
             </section>
           </main>
           <Footer/>

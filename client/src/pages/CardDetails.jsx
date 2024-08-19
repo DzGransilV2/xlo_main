@@ -3,27 +3,46 @@ import { ReactComponent as ArrowDownIcon } from '../assets/svg/ArrowDownSVG.svg'
 import { ReactComponent as ArrowUpIcon } from '../assets/svg/ArrowUpSVG.svg';
 import Card from '../components/Card';
 
+import * as SPLAT from "https://cdn.jsdelivr.net/npm/gsplat@latest";
+
+import { Viewer } from "gle-gaussian-splat-3d";
+
+
 const CardDetails = () => {
+
+  const viewer = new Viewer({
+    ignoreDevicePixelRatio: false,
+    gpuAcceleratedSort: true
+  });
+  viewer.loadFile('', {
+    splatAlphaRemovalThreshold: 5, // out of 255
+    halfPrecisionCovariancesOnGPU: true
+  }).then(() => {
+    viewer.start();
+  });
+
   return (
     <div className='flex flex-col items-center justify-center gap-5 w-full h-auto'>
       <div className='flex gap-5'>
-        <div className='w-[829px] h-[490px] bg-myGrey rounded-myRound'>Image</div>
+        <div className='w-[829px] h-[490px] overflow-hidden bg-myGrey rounded-myRound'>
+          <canvas id="canvas" className='w-full h-full'></canvas>
+        </div>
         <div className='w-[431px] h-[490px] rounded-myRound flex gap-5'>
-            <div className='flex flex-wrap gap-5'>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-            </div>
-            <div className='flex flex-col justify-between'>
-                <div className='rounded-full w-[50px] h-[50px] bg-myGrey flex items-center justify-center'><ArrowUpIcon height={24} width={24}/></div>
-                <div className='rounded-full w-[50px] h-[50px] bg-myGrey flex items-center justify-center'><ArrowDownIcon height={24} width={24}/></div>
-            </div>
+          <div className='flex flex-wrap gap-5'>
+            <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
+            <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
+            <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
+            <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
+            <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
+          </div>
+          <div className='flex flex-col justify-between'>
+            <div className='rounded-full w-[50px] h-[50px] bg-myGrey flex items-center justify-center'><ArrowUpIcon height={24} width={24} /></div>
+            <div className='rounded-full w-[50px] h-[50px] bg-myGrey flex items-center justify-center'><ArrowDownIcon height={24} width={24} /></div>
+          </div>
         </div>
       </div>
       <div className='flex gap-5'>
-      {/* h-[155px] now its auto  */}
+        {/* h-[155px] now its auto  */}
         <div className='w-[829px] h-auto flex flex-col gap-5 bg-myGrey rounded-myRound px-5 py-[15px]'>
           <div>
             <span className='font-bold text-2xl'>Fortuner Toyota (Title)</span>
@@ -58,7 +77,7 @@ const CardDetails = () => {
         </div>
       </div>
       <div className='flex gap-5 text-xl'>
-      {/* h-[565px] now its auto */}
+        {/* h-[565px] now its auto */}
         <div className='px-5 py-[15px] w-[829px] h-auto flex flex-col gap-5 bg-myGrey rounded-myRound'>
           <span className='font-semibold'>Description</span>
           <span className='font-normal'>
@@ -69,7 +88,7 @@ const CardDetails = () => {
       </div>
       <div className='flex flex-col flex-wrap gap-5 w-[1280px] h-auto rounded-myRound mt-5'>
         <span className='font-semibold text-xl'>Related</span>
-        <Card/>
+        <Card />
       </div>
     </div>
   )
