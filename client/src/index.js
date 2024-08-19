@@ -4,12 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Post from './pages/Post';
+import Credential from './pages/Credential';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
     {/* <Post/> */}
+    <Credential/>
   </React.StrictMode>
 );
 
