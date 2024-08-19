@@ -1,6 +1,7 @@
 import React from 'react'
 import Footer from '../components/Footer'
 import Login from '../components/Login'
+import SignUp from '../components/SignUp'
 
 const Credential = () => {
   return (
@@ -8,6 +9,7 @@ const Credential = () => {
             <section className='container relative w-full h-full flex flex-col items-center justify-center gap-5'>
                     {/* <span className='font-bold text-2xl'>Login</span> */}
                         <Login/>
+                        <SignUp/>
                     <div className='absolute w-full bottom-0'>
                         <Footer />
                     </div>
