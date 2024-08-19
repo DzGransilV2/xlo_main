@@ -7,9 +7,11 @@ const Header = () => {
         <div className='sticky top-0 z-[1]'>
             <header className='bg-myBackground h-[13.0625rem] flex items-center justify-between font-myPoppins relative'>
                 <div className='flex items-center justify-between w-full gap-5 absolute top-[3.125rem]'>
-                    <div className='font-black text-4xl'>
-                        <h1>XLO</h1>
-                    </div>
+                    <Link to='/'>
+                        <div className='font-black text-4xl'>
+                            <h1>XLO</h1>
+                        </div>
+                    </Link>
                     <div className='w-[60rem] h-[3.125rem] flex items-center justify-center'>
                         {/* <input className='w-full h-full rounded-[0.625rem] p-5' type="text" name="" id="" placeholder='Type here to search...'/> */}
                         <Searchbar />
