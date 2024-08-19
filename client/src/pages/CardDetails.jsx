@@ -12,65 +12,65 @@ import * as GaussianSplats3D from '@mkkellogg/gaussian-splats-3d';
 
 const CardDetails = () => {
 
-  const [loading, setLoading] = useState(false);
-  const [viewer, setViewer] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  // const [viewer, setViewer] = useState(null);
 
   const canvasRef = useRef(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
+  // useEffect(() => {
+  //   const canvas = canvasRef.current;
 
-    if (!canvas) return;
+  //   if (!canvas) return;
 
-    // Initialize the viewer
-    const viewer = new GaussianSplats3D.Viewer({
-      canvas,
-      'cameraUp': [0, -1, -0.6],
-      'initialCameraPosition': [-1, -4, 6],
-      'initialCameraLookAt': [0, 4, 0]
-    });
+  //   // Initialize the viewer
+  //   const viewer = new GaussianSplats3D.Viewer({
+  //     canvas,
+  //     'cameraUp': [0, -1, -0.6],
+  //     'initialCameraPosition': [-1, -4, 6],
+  //     'initialCameraLookAt': [0, 4, 0]
+  //   });
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/bonsai/bonsai-7k.splat');
-        if (!response.ok) {
-          throw new Error('Network response was not ok: ' + response.statusText);
-        }
-        const data = await response.arrayBuffer();
-        console.log('Data loaded:', data.byteLength);
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/bonsai/bonsai-7k.splat');
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok: ' + response.statusText);
+  //       }
+  //       const data = await response.arrayBuffer();
+  //       console.log('Data loaded:', data.byteLength);
 
-        if (!(data instanceof ArrayBuffer) || data.byteLength < 1000) {
-          throw new Error('Invalid data received or data too small');
-        }
+  //       if (!(data instanceof ArrayBuffer) || data.byteLength < 1000) {
+  //         throw new Error('Invalid data received or data too small');
+  //       }
 
-        await viewer.addSplatScene(data, {
-          'splatAlphaRemovalThreshold': 5,
-          'showLoadingUI': true,
-          'position': [0, 1, 0],
-          'rotation': [0, 0, 0, 1],
-          'scale': [1.5, 1.5, 1.5]
-        });
-        viewer.start();
-      } catch (error) {
-        console.error("Error loading or processing splat file:", error);
-      }
-    };
+  //       await viewer.addSplatScene(data, {
+  //         'splatAlphaRemovalThreshold': 5,
+  //         'showLoadingUI': true,
+  //         'position': [0, 1, 0],
+  //         'rotation': [0, 0, 0, 1],
+  //         'scale': [1.5, 1.5, 1.5]
+  //       });
+  //       viewer.start();
+  //     } catch (error) {
+  //       console.error("Error loading or processing splat file:", error);
+  //     }
+  //   };
 
-    fetchData();
+  //   fetchData();
 
-    const handleResize = () => {
-      if (canvas) {
-        viewer.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-      }
-    };
+  //   const handleResize = () => {
+  //     if (canvas) {
+  //       viewer.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  //     }
+  //   };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   return (
     <div className='flex flex-col items-center justify-center gap-5 w-full h-auto'>

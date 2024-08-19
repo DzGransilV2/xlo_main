@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import CardDetails from './pages/CardDetails';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
   return (
@@ -14,7 +15,13 @@ function App() {
           <main className='flex gap-5' style={{minHeight:"calc(100% - 13.0625rem - 2.5rem)"}}>
             <aside className='w-[12.5rem]'><Navbar/></aside>
             <section className='w-full mx-5 mb-[6.25rem]'>
-              <Home/>
+              {/* <Home/> */}
+              <Routes>
+                <Route path="/" element={<Navigate to='/home'/>}/>
+                <Route path="/home" element={<Home/>}/>
+                <Route path="/card/:id" element={<CardDetails/>}/>
+                <Route path="/profile" element={<Profile/>}/>
+              </Routes>
               {/* <CardDetails/> */}
               {/* <Profile/> */}
             </section>

@@ -1,9 +1,17 @@
 import React from 'react'
 import { ReactComponent as SaveIcon } from '../assets/svg/SaveSVG.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Card = () => {
+
+    const navigate = useNavigate();
+    const id = 1;
+    const cardClick = () => {
+        navigate(`/card/${id}`);
+    }
+
     return (
-        <div className='h-[18.75rem] w-[18rem] relative overflow-hidden rounded-myRound hover:shadow-myShadow'>
+        <div onClick={cardClick} className='h-[18.75rem] w-[18rem] relative overflow-hidden rounded-myRound hover:shadow-myShadow'>
             <div className='bg-slate-600 w-full flex items-center justify-center overflow-hidden' style={{ height: 'calc(18.75rem - 5.7rem)' }}>
                 <div className='absolute top-5 right-5 bg-myGrey rounded-full h-[1.875rem] w-[1.875rem] flex items-center justify-center'>
                     <SaveIcon height={24} width={24} />
