@@ -11,7 +11,6 @@ const connectDB = async () => {
             uname: String
         });
         const users = mongoose.model('users', userSchema);
-        console.log("after user");
         const data = await users.find().then(
             console.log("DATA FOUND")
         );
