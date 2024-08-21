@@ -4,14 +4,18 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb://localhost:27017/xlo');
-        console.log("Connected to MongoDB");
-
-        const credentialSchema = new mongoose.Schema({});
-        const users = mongoose.model('users', credentialSchema);
-        const data = await users.find();
-        console.log("Fetched data:", data);
-
+        await mongoose.connect('mongodb://127.0.0.1:27017/xlo').then(
+            console.log("Connected to MongoDB")
+        );
+        const userSchema = new mongoose.Schema({
+            uname: String
+        });
+        const users = mongoose.model('users', userSchema);
+        console.log("after user");
+        const data = await users.find().then(
+            console.log("DATA FOUND")
+        );
+        console.log(data)
     } catch (error) {
         console.error("Error occurred:", error);
     }
