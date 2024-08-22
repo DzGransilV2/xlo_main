@@ -2,6 +2,7 @@ import './App.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
+// import PrivateComponents from './components/PrivateComponents';
 import CardDetails from './pages/CardDetails';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -17,10 +18,12 @@ function App() {
             <section className='w-full mx-5 mb-[6.25rem]'>
               {/* <Home/> */}
               <Routes>
+                {/* <Route element={<PrivateComponents/>} > */}
                 <Route path="/" element={<Navigate to='/home'/>}/>
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/card/:id" element={<CardDetails/>}/>
                 <Route path="/profile" element={<Profile/>}/>
+                {/* </Route> */}
               </Routes>
               {/* <CardDetails/> */}
               {/* <Profile/> */}

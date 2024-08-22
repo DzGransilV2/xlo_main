@@ -23,7 +23,8 @@ const SignUp = () => {
         try {
             const response = await axios.post('http://localhost:8000/signup', { uname, email, password });
             console.log(response.data);
-            navigate('/home');
+            localStorage.setItem("user",JSON.stringify(response.data));
+            navigate('/login');
         } catch (err) {
             console.error('Error signing up:', err);
             setError('Error signing up. Please try again.');
