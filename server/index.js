@@ -8,12 +8,27 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post('/signup', async (req, res)=>{
+app.post('/signup', async (req, res) => {
     let user = new User(req.body);
     let result = await user.save();
+    result = result.toObject()
+    delete result.password;
     res.send(result);
 });
 
-app.listen(8000, function() {
+app.post('/login', async (req, res) => {
+    if (req.body.uname && req.body.password) {
+        let user = await User.findOne(req.body).select('-password');
+        if (user) {
+            res.send(user);
+        } else {
+            res.send({ result: 'No user found' });
+        }
+    } else {
+        res.send({ result: 'Please enter both username and password' });
+    }
+})
+
+app.listen(8000, function () {
     console.log("Server started on http://localhost:8000/");
 });

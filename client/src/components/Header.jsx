@@ -1,8 +1,16 @@
 import React from 'react'
 import Searchbar from './Searchbar'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Header = () => {
+
+    const auth = localStorage.getItem("user");
+    const navigate = useNavigate();
+    const logout = () => {
+        localStorage.clear();
+        navigate('/login');
+    }
+
     return (
         <div className='sticky top-0 z-[1]'>
             <header className='bg-myBackground h-[13.0625rem] flex items-center justify-between font-myPoppins relative'>
@@ -22,6 +30,11 @@ const Header = () => {
                         </span>
                         <span className='font-medium text-[1.5rem]'>Sell</span>
                     </Link>
+                   {auth? <Link onClick={logout} to='/login' className='bg-myGrey px-4 h-[3.125rem] flex items-center justify-center gap-[0.3125rem] rounded-[0.625rem] hover:shadow-myShadow hover:cursor-pointer'>
+                        <span className='font-medium text-[1.5rem]'>Logout</span>
+                    </Link> : <Link to='/login' className='bg-myGrey px-4 h-[3.125rem] flex items-center justify-center gap-[0.3125rem] rounded-[0.625rem] hover:shadow-myShadow hover:cursor-pointer'>
+                        <span className='font-medium text-[1.5rem]'>Login</span>
+                    </Link>}
                 </div>
             </header>
         </div>
