@@ -18,6 +18,20 @@
   gap: 10px; /* Adjust gap as needed */
 }
 
+.text-hover{
+  border-radius: 10px;
+  color: black;
+  background-color: transparent;
+  padding: 10px 5px;
+  transition: all 300ms ease-in-out;
+}
+
+.text-hover:hover{
+  background-color: black;
+  color: white;
+  /* border-radius: 10px; */
+}
+
 .nav-text {
   max-width: 0; /* Initially hide text */
   opacity: 0;
