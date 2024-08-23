@@ -18,8 +18,8 @@ root.render(
         <Routes>
           <Route path="/*" element={<App />} />
           <Route path="/post" element={<Post />} />
-          <Route path="/login*" element={<Sigin />} />
-          <Route path="/Signup*" element={<Signup />} />
+          <Route path="/login" element={<Sigin />} />
+          <Route path="/Signup" element={<Signup />} />
         </Routes>
       </BrowserRouter>
     </Provider>

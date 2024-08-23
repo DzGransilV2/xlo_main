@@ -8,7 +8,7 @@ const Login = () => {
 
     const [uname, setUname] = useState("");
     const [password, setPassword] = useState("");
-    
+
     const [error, setError] = useState("");
 
     const {loading} = useSelector((state)=>state.auth);
@@ -46,7 +46,7 @@ const Login = () => {
                     navigate('/');
                 }else{
                     setError(result.payload.result);
-                    console.log(result.payload.result)
+                    // console.log(result.payload.result)
                 }
             }
         );
