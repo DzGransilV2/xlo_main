@@ -7,18 +7,22 @@ import Post from './pages/Post';
 import Sigin from './pages/Sigin';
 import Signup from './pages/Signup';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from './store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/*" element={<App />} />
-        <Route path="/post" element={<Post />} />
-        <Route path="/login*" element={<Sigin />} />
-        <Route path="/Signup*" element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/*" element={<App />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/login*" element={<Sigin />} />
+          <Route path="/Signup*" element={<Signup />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
