@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
@@ -27,6 +27,12 @@ const Login = () => {
             setError("An error occurred while logging in. Please try again.");
         }
     }
+
+    useEffect(()=>{
+        if(localStorage.getItem("user")){
+            navigate('/');
+        }
+    })
 
     return (
         <div
