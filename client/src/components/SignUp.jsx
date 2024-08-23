@@ -12,21 +12,21 @@ const SignUp = () => {
     const [comparePass, setComparePass] = useState("");
     const [error, setError] = useState("");
 
-    const collectData = async (e) => {
+    const signupData = async (e) => {
         e.preventDefault();
         if (password !== comparePass) {
             setError("Passwords do not match");
             return; // Stops further processing if passwords do not match
         }
         setError("");
-        console.log(uname, email, password);
+        // console.log(uname, email, password);
         try {
             const response = await axios.post('http://localhost:8000/signup', { uname, email, password });
-            console.log(response.data);
+            // console.log(response.data);
             localStorage.setItem("user",JSON.stringify(response.data));
             navigate('/login');
         } catch (err) {
-            console.error('Error signing up:', err);
+            // console.error('Error signing up:', err);
             setError('Error signing up. Please try again.');
         }
     }
@@ -45,7 +45,7 @@ const SignUp = () => {
                 <h2 className="text-2xl font-medium text-slate-700">Sign Up</h2>
                 <p className="text-black">Enter details below.</p>
             </div>
-            <form className="w-full mt-4 space-y-3" onSubmit={collectData}>
+            <form className="w-full mt-4 space-y-3" onSubmit={signupData}>
                 <div>
                     <input
                         className="outline-none border-2 rounded-md px-2 py-1 text-black w-full focus:border-blue-300"

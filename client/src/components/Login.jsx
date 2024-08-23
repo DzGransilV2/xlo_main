@@ -1,7 +1,33 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
+
+    const [uname, setUname] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const navigate = useNavigate();
+
+    const loginData = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8000/login', { uname, password });
+            // console.log(response.data)
+            if (!response.data.result) {
+                // console.log(response.data)
+                localStorage.setItem("user", JSON.stringify(response.data));
+                navigate('/');
+                setError("");
+            } else {
+                setError(response.data.result);
+            }
+        } catch (error) {
+            setError("An error occurred while logging in. Please try again.");
+        }
+    }
+
     return (
         <div
             className="w-80 rounded-lg shadow h-auto p-6 bg-myGrey relative overflow-hidden"
@@ -10,7 +36,7 @@ const Login = () => {
                 <h2 className="text-2xl font-medium text-slate-700">Login</h2>
                 <p className="text-black">Enter details below.</p>
             </div>
-            <form className="w-full mt-4 space-y-3">
+            <form className="w-full mt-4 space-y-3" onSubmit={loginData}>
                 <div>
                     <input
                         className="outline-none border-2 rounded-md px-2 py-1 text-black w-full focus:border-blue-300"
@@ -18,6 +44,7 @@ const Login = () => {
                         id="username"
                         name="username"
                         type="text"
+                        onChange={(e) => setUname(e.target.value)}
                     />
                 </div>
                 <div>
@@ -27,9 +54,10 @@ const Login = () => {
                         id="password"
                         name="password"
                         type="password"
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                     <div className="flex items-center">
                         <input
                             className="mr-2 w-4 h-4"
@@ -42,7 +70,8 @@ const Login = () => {
                     <a className="text-blue-500 font-medium hover:underline" href="#"
                     >Forgot Password</a
                     >
-                </div>
+                </div> */}
+                {error && <p className="text-red-500 text-center">{error}</p>}
                 <button
                     className="w-full justify-center py-1 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-md text-white ring-2"
                     id="login"
