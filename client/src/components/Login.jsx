@@ -1,35 +1,60 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
+import { login } from '../store/auth-slice';
 
 const Login = () => {
 
     const [uname, setUname] = useState("");
     const [password, setPassword] = useState("");
+    
     const [error, setError] = useState("");
+
+    const {loading} = useSelector((state)=>state.auth);
 
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+
     const loginData = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:8000/login', { uname, password });
-            // console.log(response.data)
-            if (!response.data.result) {
-                // console.log(response.data)
-                localStorage.setItem("user", JSON.stringify(response.data));
-                navigate('/');
-                setError("");
-            } else {
-                setError(response.data.result);
+        // try {
+        //     const response = await axios.post(`${hostname}/login`, { uname, password });
+        //     // console.log(response.data)
+        //     if (!response.data.result) {
+        //         // console.log(response.data)
+        //         localStorage.setItem("user", JSON.stringify(response.data));
+        //         navigate('/');
+        //         setError("");
+        //     } else {
+        //         setError(response.data.result);
+        //     }
+        // } catch (error) {
+        //     setError("An error occurred while logging in. Please try again.");
+        // }
+
+        let userCredential = { uname, password }
+
+        dispatch(login(userCredential)).then(
+            (result) => {
+                // console.log("Payload",result.payload);
+                if (!result.payload.result) {
+                    setUname("");
+                    setPassword("");
+                    setError("")
+                    navigate('/');
+                }else{
+                    setError(result.payload.result);
+                    console.log(result.payload.result)
+                }
             }
-        } catch (error) {
-            setError("An error occurred while logging in. Please try again.");
-        }
+        );
+
     }
 
-    useEffect(()=>{
-        if(localStorage.getItem("user")){
+    useEffect(() => {
+        if (localStorage.getItem("user")) {
             navigate('/');
         }
     })
@@ -84,7 +109,7 @@ const Login = () => {
                     name="login"
                     type="submit"
                 >
-                    Login
+                    {loading?'Loading...':'Login'}
                 </button>
                 <p className="flex justify-center space-x-1">
                     <span className="text-slate-700"> Don't have an account? </span>
