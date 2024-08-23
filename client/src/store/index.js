@@ -5,7 +5,7 @@
 // export const store = legacy_createStore(reducers, {}, applyMiddleware(thunk));
 
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./features/auth-slice";
+import authSlice from "./auth-slice";
 
 const store = configureStore({
     reducer: {
