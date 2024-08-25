@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { hostname } from '../config';
+import { signUp } from '../store/auth-slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignUp = () => {
 
@@ -10,7 +13,10 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [comparePass, setComparePass] = useState("");
-    const [error, setError] = useState("");
+    const [error1, setError] = useState("");
+
+    const { loading, error } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
     const signupData = async (e) => {
         e.preventDefault();
@@ -18,24 +24,45 @@ const SignUp = () => {
             setError("Passwords do not match");
             return; // Stops further processing if passwords do not match
         }
-        setError("");
-        // console.log(uname, email, password);
-        try {
-            const response = await axios.post('http://localhost:8000/signup', { uname, email, password });
-            // console.log(response.data);
-            localStorage.setItem("user",JSON.stringify(response.data));
-            navigate('/login');
-        } catch (err) {
-            // console.error('Error signing up:', err);
-            setError('Error signing up. Please try again.');
-        }
+        // setError("");
+        // // console.log(uname, email, password);
+        // try {
+        //     const response = await axios.post(`${hostname}/signup`, { uname, email, password });
+        //     // console.log(response.data);
+        //     localStorage.setItem("user",JSON.stringify(response.data));
+        //     navigate('/login');
+        // } catch (err) {
+        //     // console.error('Error signing up:', err);
+        //     setError('Error signing up. Please try again.');
+        // }
+
+        let userCredential = { uname, email, password }
+
+        dispatch(signUp(userCredential))
+            .then((result) => {
+                console.log(result.payload.result)
+                if (result.payload && !result.payload.result) {
+                    setUname("");
+                    setEmail("");
+                    setPassword("");
+                    setError("");
+                    navigate('/');
+                } else {
+                    setError(result.payload.result);
+                    console.log(result.payload ? result.payload.result : result.error.message);
+                    // console.log(error);
+                }
+            })
+            .catch((error) => {
+                console.error("Sign-up error:", error);
+            });
     }
 
-    useEffect(()=>{
-        if(localStorage.getItem("user")){
+    useEffect(() => {
+        if (localStorage.getItem("user")) {
             navigate('/');
         }
-    })
+    }, [navigate])
 
     return (
         <div
@@ -86,14 +113,14 @@ const SignUp = () => {
                         onChange={(e) => setComparePass(e.target.value)}
                     />
                 </div>
-                {error && <p className="text-red-500 text-center">{error}</p>}
+                {error1 && <p className="text-red-500 text-center">{error1}</p>}
                 <button
                     className="w-full justify-center py-1 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-md text-white ring-2"
                     id="login"
                     name="login"
                     type="submit"
                 >
-                    Sign Up
+                    {loading ? 'Loading...' : 'Sign Up'}
                 </button>
                 <p className="flex justify-center space-x-1">
                     <span className="text-slate-700"> Have an account? </span>

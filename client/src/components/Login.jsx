@@ -57,7 +57,7 @@ const Login = () => {
         if (localStorage.getItem("user")) {
             navigate('/');
         }
-    })
+    }, [navigate])
 
     return (
         <div

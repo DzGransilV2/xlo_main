@@ -9,11 +9,15 @@ app.use(express.json());
 app.use(cors());
 
 app.post('/signup', async (req, res) => {
-    let user = new User(req.body);
-    let result = await user.save();
-    result = result.toObject()
-    delete result.password;
-    res.send(result);
+    if (req.body.uname && req.body.email && req.body.password) {
+        let user = new User(req.body);
+        let result = await user.save();
+        result = result.toObject()
+        delete result.password;
+        res.send(result);
+    }else{
+        res.send({ result: 'Please fill all fields' });
+    }
 });
 
 app.post('/login', async (req, res) => {
