@@ -7,6 +7,14 @@ const Form = () => {
     const [selectedCity, setSelectedCity] = useState("");
     const [neighbourhood, setNeighbourhood] = useState([]);
 
+    // const [selectedOption, setSelectedOption] = useState("none");
+    const [selectedOption1, setSelectedOption1] = useState("none");
+    const [selectedOption2, setSelectedOption2] = useState("none");
+    const [selectedOption3, setSelectedOption3] = useState("none");
+    const [selectedOption4, setSelectedOption4] = useState("none");
+    const [selectedOption5, setSelectedOption5] = useState("none");
+    const [selectedOption6, setSelectedOption6] = useState("none");
+
     const stateCityMapping = {
         "Andhra Pradesh": {
             "Vijayawada": ["Srinivasa Nagar", "Benz Circle", "Moghalrajpuram", "Gollapudi", "Kaleswara Rao Market", "Gandhinagar", "Prakasam Barrage", "Satyanarayana Puram", "Krishna Lanka", "Patamata"],
@@ -270,8 +278,8 @@ const Form = () => {
                             <label className="text-sm mb-2  cursor-pointer" htmlFor="fuel">
                                 Fuel
                             </label>
-                            <select className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="fuel">
-                                <option value="" disabled selected>None</option>
+                            <select value={selectedOption1} onChange={(e) => setSelectedOption1(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="fuel">
+                                <option value="none" disabled>None</option>
                                 <option value="CNG_&_Hybrids">CNG & Hybrids</option>
                                 <option value="Diesel">Diesel</option>
                                 <option value="Electric">Electric</option>
@@ -281,16 +289,16 @@ const Form = () => {
                             <label className="text-sm mb-2  cursor-pointer" htmlFor="transmission">
                                 Transmission
                             </label>
-                            <select className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="transmission">
-                                <option value="" disabled selected>None</option>
+                            <select value={selectedOption2} onChange={(e) => setSelectedOption2(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="transmission">
+                                <option value="none" disabled>None</option>
                                 <option value="automatic">Automatic</option>
                                 <option value="manual">Manual</option>
                             </select>
                             <label className="text-sm mb-2  cursor-pointer" htmlFor="owner">
                                 Owner
                             </label>
-                            <select className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="owner">
-                                <option value="" disabled selected>None</option>
+                            <select value={selectedOption3} onChange={(e) => setSelectedOption3(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="owner">
+                                <option value="none" disabled>None</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -299,8 +307,9 @@ const Form = () => {
                                 <option value="5+">5+</option>
                             </select>
                             <label className="text-sm mb-2  cursor-pointer" id='location'>Location</label>
-                            <select onChange={handleStateChange} value={selectedState} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="location">
-                                <option value="" disabled selected>Choose your state</option>
+                            {/* value={selectedOption4} value={selectedState}*/}
+                            <select value={selectedOption4}  onChange={(e) => {setSelectedOption4(e.target.value); handleStateChange(e);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="location">
+                                <option value="none" disabled>Choose your state</option>
                                 {Object.keys(stateCityMapping).map((state) => (
                                     <option key={state} value={state}>
                                         {state}
@@ -309,8 +318,9 @@ const Form = () => {
                             </select>
                             {
                                 selectedState && (
-                                    <select  onChange={handleStateChange2} value={selectedCity} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
-                                        <option value="" disabled selected>Choose your city</option>
+                                    // value={selectedOption5} value={selectedCity}
+                                    <select value={selectedOption5} onChange={(e) =>{ setSelectedOption5(e.target.value); handleStateChange2(e);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                        <option value="none" disabled>Choose your city</option>
                                         {Object.keys(cities).map((city) => (
                                             <option key={city} value={city}>
                                                 {city}
@@ -321,8 +331,8 @@ const Form = () => {
                             }
                             {
                                 selectedCity && (
-                                    <select className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
-                                        <option value="" disabled selected>Choose your neighbourhood</option>
+                                    <select value={selectedOption6} onChange={(e) => setSelectedOption6(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                        <option value="none" disabled>Choose your neighbourhood</option>
                                         {neighbourhood.map((neighbourhood) => (
                                             <option key={neighbourhood} value={neighbourhood}>
                                                 {neighbourhood}
