@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import axios from 'axios';
+import { hostname } from '../config';
 
 const Form = () => {
 
@@ -7,8 +9,15 @@ const Form = () => {
     const [selectedCity, setSelectedCity] = useState("");
     const [neighbourhood, setNeighbourhood] = useState([]);
 
+
+    const [title, setTitle] = useState("");
+    const [brand, setBrand] = useState("");
+    const [description, setDescription] = useState("");
+    const [mileage, setMileage] = useState("");
+    const [price, setPrice] = useState("");
+    const [fuel, setFuel] = useState("none");
+
     // const [selectedOption, setSelectedOption] = useState("none");
-    const [selectedOption1, setSelectedOption1] = useState("none");
     const [selectedOption2, setSelectedOption2] = useState("none");
     const [selectedOption3, setSelectedOption3] = useState("none");
     const [selectedOption4, setSelectedOption4] = useState("none");
@@ -258,27 +267,46 @@ const Form = () => {
 
     // console.warn(cities)
 
+    const postData = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(`${hostname}/post`, { title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured });
+            // console.log(response.data)
+            // if (!response.data.result) {
+            //     // console.log(response.data)
+            //     // localStorage.setItem("user", JSON.stringify(response.data));
+            //     navigate('/');
+            //     setError("");
+            // } else {
+            //     setError(response.data.result);
+            // }
+        } catch (error) {
+            // setError("An error occurred while logging in. Please try again.");
+            console.log(error)
+        }
+    }
+
 
     return (
         /* From Uiverse.io by themrsami */
         <div className="flex flex-col items-center justify-center h-fit">
             <div className="w-full max-w-xl bg-myGrey rounded-myRound shadow-myShadow p-6">
                 <h2 className="text-2xl font-bold mb-4">POST your CAR</h2>
-                <form className="flex flex-col w-full">
+                <form className="flex flex-col w-full" onSubmit={postData}>
                     <div className='flex w-full gap-5'>
                         <div className='flex flex-col w-1/2'>
-                            <input placeholder="Title" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
-                            <input placeholder="Brand" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
-                            <textarea placeholder='Description' className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"></textarea>
-                            <input placeholder="Mileage (KM Driven)" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
-                            <input placeholder="Price" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
+                            <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
+                            <input placeholder="Brand" onChange={(e) => setBrand(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
+                            <textarea placeholder='Description' onChange={(e) => setDescription(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"></textarea>
+                            <input placeholder="Mileage (KM Driven)" onChange={(e) => setMileage(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
+                            <input placeholder="Price" onChange={(e) => setPrice(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
                         </div>
                         {/* <input placeholder="Location" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text"/> */}
                         <div className='flex flex-col w-1/2'>
                             <label className="text-sm mb-2  cursor-pointer" htmlFor="fuel">
                                 Fuel
                             </label>
-                            <select value={selectedOption1} onChange={(e) => setSelectedOption1(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="fuel">
+                            <select value={fuel} onChange={(e) => setFuel(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="fuel">
                                 <option value="none" disabled>None</option>
                                 <option value="CNG_&_Hybrids">CNG & Hybrids</option>
                                 <option value="Diesel">Diesel</option>
