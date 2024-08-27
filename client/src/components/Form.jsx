@@ -7,7 +7,7 @@ const Form = () => {
     const [selectedState, setSelectedState] = useState("");
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState("");
-    const [neighbourhood, setNeighbourhood] = useState([]);
+    const [neighbourhood1, setNeighbourhood1] = useState([]);
 
 
     const [title, setTitle] = useState("");
@@ -16,13 +16,12 @@ const Form = () => {
     const [mileage, setMileage] = useState("");
     const [price, setPrice] = useState("");
     const [fuel, setFuel] = useState("none");
-
-    // const [selectedOption, setSelectedOption] = useState("none");
-    const [selectedOption2, setSelectedOption2] = useState("none");
-    const [selectedOption3, setSelectedOption3] = useState("none");
-    const [selectedOption4, setSelectedOption4] = useState("none");
-    const [selectedOption5, setSelectedOption5] = useState("none");
-    const [selectedOption6, setSelectedOption6] = useState("none");
+    const [transmission, setTransmission] = useState("none");
+    const [owner, setOwner] = useState("none");
+    const [state, setState] = useState("none");
+    const [city, setCity] = useState("none");
+    const [neighbourhood, setNeighbourhood] = useState("none");
+    const [manufactured, setManufactured] = useState("none");
 
     const stateCityMapping = {
         "Andhra Pradesh": {
@@ -262,7 +261,7 @@ const Form = () => {
     const handleStateChange2 = (e) => {
         const city = e.target.value;
         setSelectedCity(city);
-        setNeighbourhood(cities[city] || []);
+        setNeighbourhood1(cities[city] || []);
     };
 
     // console.warn(cities)
@@ -270,8 +269,9 @@ const Form = () => {
     const postData = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${hostname}/post`, { title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured });
-            // console.log(response.data)
+            console.log(title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured)
+            const response = await axios.post(`${hostname}/post`, { title, brand, description, mileage, price, fuel, transmission, owner, location:{state, city, neighbourhood}, manufactured });
+            console.log(response.data)
             // if (!response.data.result) {
             //     // console.log(response.data)
             //     // localStorage.setItem("user", JSON.stringify(response.data));
@@ -308,7 +308,7 @@ const Form = () => {
                             </label>
                             <select value={fuel} onChange={(e) => setFuel(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="fuel">
                                 <option value="none" disabled>None</option>
-                                <option value="CNG_&_Hybrids">CNG & Hybrids</option>
+                                <option value="CNG & Hybrids">CNG & Hybrids</option>
                                 <option value="Diesel">Diesel</option>
                                 <option value="Electric">Electric</option>
                                 <option value="LPG">LPG</option>
@@ -317,15 +317,15 @@ const Form = () => {
                             <label className="text-sm mb-2  cursor-pointer" htmlFor="transmission">
                                 Transmission
                             </label>
-                            <select value={selectedOption2} onChange={(e) => setSelectedOption2(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="transmission">
+                            <select value={transmission} onChange={(e) => setTransmission(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="transmission">
                                 <option value="none" disabled>None</option>
-                                <option value="automatic">Automatic</option>
-                                <option value="manual">Manual</option>
+                                <option value="Automatic">Automatic</option>
+                                <option value="Manual">Manual</option>
                             </select>
                             <label className="text-sm mb-2  cursor-pointer" htmlFor="owner">
                                 Owner
                             </label>
-                            <select value={selectedOption3} onChange={(e) => setSelectedOption3(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="owner">
+                            <select value={owner} onChange={(e) => setOwner(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="owner">
                                 <option value="none" disabled>None</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -335,8 +335,8 @@ const Form = () => {
                                 <option value="5+">5+</option>
                             </select>
                             <label className="text-sm mb-2  cursor-pointer" id='location'>Location</label>
-                            {/* value={selectedOption4} value={selectedState}*/}
-                            <select value={selectedOption4}  onChange={(e) => {setSelectedOption4(e.target.value); handleStateChange(e);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="location">
+                            {/* value={state} value={selectedState}*/}
+                            <select value={state}  onChange={(e) => {setState(e.target.value); handleStateChange(e);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="location">
                                 <option value="none" disabled>Choose your state</option>
                                 {Object.keys(stateCityMapping).map((state) => (
                                     <option key={state} value={state}>
@@ -346,8 +346,8 @@ const Form = () => {
                             </select>
                             {
                                 selectedState && (
-                                    // value={selectedOption5} value={selectedCity}
-                                    <select value={selectedOption5} onChange={(e) =>{ setSelectedOption5(e.target.value); handleStateChange2(e);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                    // value={city} value={selectedCity}
+                                    <select value={city} onChange={(e) =>{ setCity(e.target.value); handleStateChange2(e);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
                                         <option value="none" disabled>Choose your city</option>
                                         {Object.keys(cities).map((city) => (
                                             <option key={city} value={city}>
@@ -359,11 +359,11 @@ const Form = () => {
                             }
                             {
                                 selectedCity && (
-                                    <select value={selectedOption6} onChange={(e) => setSelectedOption6(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                    <select value={neighbourhood} onChange={(e) => { setNeighbourhood(e.target.value);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
                                         <option value="none" disabled>Choose your neighbourhood</option>
-                                        {neighbourhood.map((neighbourhood) => (
-                                            <option key={neighbourhood} value={neighbourhood}>
-                                                {neighbourhood}
+                                        {neighbourhood1.map((neighbourhood1) => (
+                                            <option key={neighbourhood1} value={neighbourhood1}>
+                                                {neighbourhood1}
                                             </option>
                                         ))}
                                     </select>
@@ -372,7 +372,7 @@ const Form = () => {
                             <label className="text-sm mb-2  cursor-pointer" htmlFor="manufactured">
                                 Manufactured
                             </label>
-                            <input className="bg-gray-100  border-0 rounded-md p-2" id="manufactured" type="date" />
+                            <input onChange={(e) => setManufactured(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2" id="manufactured" type="date" />
                         </div>
                     </div>
                     {/* <p className=" mt-4"> Already have an account? <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="#">Login</a></p> */}

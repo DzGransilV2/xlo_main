@@ -36,15 +36,17 @@ app.post('/login', async (req, res) => {
 
 app.post('/post', async (req, res) => {
     try {
+        console.log(req.body);
         const post = new Post(req.body);  // Create a new instance of the model with req.body
         const savedPost = await post.save();  // Save the instance to the database
         console.warn(savedPost);
         res.send(savedPost);
     } catch (error) {
-        console.error("Error saving document:", error);
-        res.status(500).send("Error saving document");
+        console.error("Error saving document:", error.message, error.errors);
+        res.status(500).send("Error saving document: " + error.message);
     }
 });
+
 
 
 app.listen(8000, function () {
