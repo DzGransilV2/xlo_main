@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { hostname } from '../config';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
 
@@ -22,6 +23,11 @@ const Form = () => {
     const [city, setCity] = useState("none");
     const [neighbourhood, setNeighbourhood] = useState("none");
     const [manufactured, setManufactured] = useState("none");
+
+
+    const navigate = useNavigate();
+
+
 
     const stateCityMapping = {
         "Andhra Pradesh": {
@@ -269,9 +275,9 @@ const Form = () => {
     const postData = async (e) => {
         e.preventDefault();
         try {
-            console.log(title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured)
+            // console.log(title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured)
             const response = await axios.post(`${hostname}/post`, { title, brand, description, mileage, price, fuel, transmission, owner, location:{state, city, neighbourhood}, manufactured });
-            console.log(response.data)
+            // console.log(response.data)
             // if (!response.data.result) {
             //     // console.log(response.data)
             //     // localStorage.setItem("user", JSON.stringify(response.data));
@@ -280,6 +286,10 @@ const Form = () => {
             // } else {
             //     setError(response.data.result);
             // }
+            if(response){
+                <p className='flex items-center justify-center text-2xl'>upload success</p>
+                navigate('/')
+            }
         } catch (error) {
             // setError("An error occurred while logging in. Please try again.");
             console.log(error)

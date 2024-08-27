@@ -9,6 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
 app.post('/signup', async (req, res) => {
     if (req.body.uname && req.body.email && req.body.password) {
         let user = new User(req.body);
@@ -39,7 +40,7 @@ app.post('/post', async (req, res) => {
         console.log(req.body);
         const post = new Post(req.body);  // Create a new instance of the model with req.body
         const savedPost = await post.save();  // Save the instance to the database
-        console.warn(savedPost);
+        // console.warn(savedPost);
         res.send(savedPost);
     } catch (error) {
         console.error("Error saving document:", error.message, error.errors);
@@ -47,7 +48,37 @@ app.post('/post', async (req, res) => {
     }
 });
 
+app.get('/posts', async (req, res)=>{
+    try {
+        const posts = await Post.find();
+        // console.warn(posts)
+        if(posts.length>0){
+            res.send(posts);
+        }else{
+            res.send("No posts exists");
+        }
+    }catch{
+        res.status(500).send("Error fetching posts");
+    }
+})
 
+app.get('/posts/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const post = await Post.findById(id);
+  
+      if (post) {
+        res.send(post);
+      } else {
+        res.status(404).send('Post not found');
+      }
+    } catch (error) {
+      console.error('Error fetching post:', error);
+      res.status(500).send('Error fetching post');
+    }
+  });
+  
 
 app.listen(8000, function () {
     console.log("Server started on http://localhost:8000/");
