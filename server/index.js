@@ -4,11 +4,19 @@ require('./config/config');
 const User = require('./models/User');
 const Post = require('./models/Post')
 const app = express();
+const { initializeFirebaseApp, getFirebaseStorage } = require('./config/config');
+const multer = require('multer');
+const { ref, uploadBytes, getDownloadURL } = require('firebase/storage');
+
+initializeFirebaseApp();
+const storage = getFirebaseStorage();
 
 
 app.use(express.json());
 app.use(cors());
 
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 app.post('/signup', async (req, res) => {
     if (req.body.uname && req.body.email && req.body.password) {

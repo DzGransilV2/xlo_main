@@ -72,7 +72,7 @@ const SignUp = () => {
                 <h2 className="text-2xl font-medium text-slate-700">Sign Up</h2>
                 <p className="text-black">Enter details below.</p>
             </div>
-            <form className="w-full mt-4 space-y-3" onSubmit={signupData}>
+            <form className="w-full mt-4 space-y-3" onSubmit={signupData} enctype="multipart/form-data">
                 <div>
                     <input
                         className="outline-none border-2 rounded-md px-2 py-1 text-black w-full focus:border-blue-300"
@@ -91,6 +91,14 @@ const SignUp = () => {
                         name="email"
                         type="text"
                         onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <input
+                        className="outline-none border-2 rounded-md px-2 py-1 text-black w-full focus:border-blue-300"
+                        id="userpic"
+                        name="userpic"
+                        type="file"
                     />
                 </div>
                 <div>
