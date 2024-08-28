@@ -4,6 +4,7 @@ require('./config/config');
 const User = require('./models/User');
 const Post = require('./models/Post')
 const app = express();
+const crypto = require('crypto');
 const { initializeFirebaseApp, getFirebaseStorage } = require('./config/config');
 const multer = require('multer');
 const { ref, uploadBytes, getDownloadURL } = require('firebase/storage');
@@ -21,8 +22,10 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.post('/signup', upload.single('userpic'), async (req, res) => {
     try {
         if (req.body && req.file) {
+            const uniqueSuffix = crypto.randomBytes(16).toString("hex");  // Generates a 32-character hexadecimal string
+            const uniqueFilename = `userpics/${uniqueSuffix}_${req.file.originalname}`;
             // Upload the user picture to Firebase Storage
-            const storageRef = ref(storage, `userpics/${req.file.originalname}`);
+            const storageRef = ref(storage, uniqueFilename);
             const snapshot = await uploadBytes(storageRef, req.file.buffer);
             const downloadURL = await getDownloadURL(snapshot.ref);
 
