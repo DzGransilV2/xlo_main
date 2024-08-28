@@ -20,18 +20,25 @@ export const login = createAsyncThunk(
 
 
 export const signUp = createAsyncThunk(
-    '/signup',
-    async (userCredential) => {
+    'auth/signup',  // Define a unique action type string
+    async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${hostname}/signup`, userCredential);
-            // console.log(response)
-            if (!response.data.result) {
+            console.log(formData)
+            const response = await axios.post(`${hostname}/signup`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',  // Ensure axios handles FormData correctly
+                },
+            });
+
+            if (response.data && !response.data.result) {
                 localStorage.setItem("user", JSON.stringify(response.data));
             }
-            console.log(response.data)
+
             return response.data;
         } catch (error) {
-            console.log("An error occurred while logging in. Please try again.");
+            console.error("An error occurred while signing up:", error.message);
+            // Return a rejected action with the error message for proper error handling
+            return rejectWithValue(error.response ? error.response.data : error.message);
         }
     }
 );

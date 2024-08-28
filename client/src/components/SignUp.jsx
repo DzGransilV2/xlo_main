@@ -14,9 +14,26 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const [comparePass, setComparePass] = useState("");
     const [error1, setError] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [file, setFile] = useState("");
 
     const { loading, error } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+        if (file && file.type === 'image/jpeg') {
+            setSelectedFile(file);
+        } else {
+            setSelectedFile(null);
+            setError('Please upload a valid JPG image.');
+        }
+        if (!file) {
+            console.error('No file selected');
+            return;
+        }
+        setFile(file);
+    };
 
     const signupData = async (e) => {
         e.preventDefault();
@@ -24,26 +41,27 @@ const SignUp = () => {
             setError("Passwords do not match");
             return; // Stops further processing if passwords do not match
         }
-        // setError("");
-        // // console.log(uname, email, password);
-        // try {
-        //     const response = await axios.post(`${hostname}/signup`, { uname, email, password });
-        //     // console.log(response.data);
-        //     localStorage.setItem("user",JSON.stringify(response.data));
-        //     navigate('/login');
-        // } catch (err) {
-        //     // console.error('Error signing up:', err);
-        //     setError('Error signing up. Please try again.');
+
+        const userpic = selectedFile;
+        console.log(userpic)
+
+        const formData = new FormData();  // Create a new FormData object
+        formData.append('uname', uname);  // Append all form fields
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('userpic', selectedFile);
+        
+        // if (selectedFile) {
+        //       // Append the file
         // }
 
-        let userCredential = { uname, email, password }
-
-        dispatch(signUp(userCredential))
+        dispatch(signUp(formData))
             .then((result) => {
                 console.log(result.payload.result)
                 if (result.payload && !result.payload.result) {
                     setUname("");
                     setEmail("");
+                    setSelectedFile(null);
                     setPassword("");
                     setError("");
                     navigate('/');
@@ -72,7 +90,7 @@ const SignUp = () => {
                 <h2 className="text-2xl font-medium text-slate-700">Sign Up</h2>
                 <p className="text-black">Enter details below.</p>
             </div>
-            <form className="w-full mt-4 space-y-3" onSubmit={signupData} enctype="multipart/form-data">
+            <form className="w-full mt-4 space-y-3" onSubmit={signupData} encType="multipart/form-data">
                 <div>
                     <input
                         className="outline-none border-2 rounded-md px-2 py-1 text-black w-full focus:border-blue-300"
@@ -99,6 +117,8 @@ const SignUp = () => {
                         id="userpic"
                         name="userpic"
                         type="file"
+                        accept=".jpg, .jpeg"
+                        onChange={handleImageChange}
                     />
                 </div>
                 <div>

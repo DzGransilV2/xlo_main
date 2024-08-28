@@ -9,7 +9,9 @@ const ProfileCard = ({logout}) => {
   return (
     <div className='w-full h-auto flex flex-col gap-[100px] items-center'>
       <div className='flex gap-5'>
-        <div className='w-[130px] h-[130px] bg-myGrey rounded-full'></div>
+        <div className='w-[130px] h-[130px] bg-myGrey rounded-full overflow-hidden'>
+          <img src={userObject.userpic} alt="pro-pic" className='w-full' />
+        </div>
         <div className='flex flex-col justify-center gap-[10px]'>
           <span className='font-semibold text-2xl'>{userObject.uname}</span>
           {/* <span className='font-normal text-base'>{userObject.email}</span> */}

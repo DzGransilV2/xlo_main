@@ -18,15 +18,29 @@ app.use(cors());
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-app.post('/signup', async (req, res) => {
-    if (req.body.uname && req.body.email && req.body.password) {
-        let user = new User(req.body);
-        let result = await user.save();
-        result = result.toObject()
-        delete result.password;
-        res.send(result);
-    } else {
-        res.send({ result: 'Please fill all fields' });
+app.post('/signup', upload.single('userpic'), async (req, res) => {
+    try {
+        if (req.body) {
+            // Upload the user picture to Firebase Storage
+            const storageRef = ref(storage, `userpics/${req.file.originalname}`);
+            const snapshot = await uploadBytes(storageRef, req.file.buffer);
+            const downloadURL = await getDownloadURL(snapshot.ref);
+
+            // Save user data with the profile picture URL in MongoDB
+            let user = new User({
+                ...req.body,
+                userpic: downloadURL  // Store the download URL in MongoDB
+            });
+            let result = await user.save();
+            result = result.toObject();
+            delete result.password;
+            res.send(result);
+        } else {
+            res.send({ result: 'Please fill all fields and upload a user picture' });
+        }
+    } catch (error) {
+        console.error('Error during signup:', error.message);
+        res.status(500).send({ error: 'An error occurred during signup' });
     }
 });
 
