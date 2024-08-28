@@ -20,7 +20,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.post('/signup', upload.single('userpic'), async (req, res) => {
     try {
-        if (req.body) {
+        if (req.body && req.file) {
             // Upload the user picture to Firebase Storage
             const storageRef = ref(storage, `userpics/${req.file.originalname}`);
             const snapshot = await uploadBytes(storageRef, req.file.buffer);
