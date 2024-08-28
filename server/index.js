@@ -15,9 +15,8 @@ const storage = getFirebaseStorage();
 
 app.use(express.json());
 app.use(cors());
-
-
 const upload = multer({ storage: multer.memoryStorage() });
+
 
 app.post('/signup', upload.single('userpic'), async (req, res) => {
     try {
