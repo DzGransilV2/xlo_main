@@ -14,6 +14,10 @@ const Navbar = () => {
     setActiveLink(link);
   };
 
+  // const user = localStorage.getItem("user");
+  // const userObj = JSON.parse(user);
+  // const id = userObj._id;
+
   return (
     <nav className='navbar bg-myGrey rounded-[0.625rem] group'>
       <ul className='flex flex-col gap-5 p-[0.5rem]'>
@@ -36,7 +40,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className={`nav-item text-hover ${activeLink==='profile'?'active': ''}`}>
-          <Link onClick={()=>handleSetActiveLink('profile')} to='/profile' className='nav-item'>
+          <Link onClick={()=>handleSetActiveLink('profile')} to={`/profile/`} className='nav-item'>
             <span><UserIcon height={24} width={24} /></span>
             <span className='nav-text'>Profile</span>
           </Link>

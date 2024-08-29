@@ -1,10 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ProfileCard = ({logout}) => {
+const ProfileCard = ({ logout }) => {
 
-  const user = localStorage.getItem("user")
-  const userObject = JSON.parse(user)
+  const user = localStorage.getItem("user");
+  const userObject = JSON.parse(user);
+
+  const share = () => {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      alert('URL copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+    });
+  }; 
 
   return (
     <div className='w-full h-auto flex flex-col gap-[100px] items-center'>
@@ -17,7 +26,7 @@ const ProfileCard = ({logout}) => {
           {/* <span className='font-normal text-base'>{userObject.email}</span> */}
           <span className='font-normal text-base'>Member since Aug 2024</span>
           <span className='flex gap-5'>
-            <button className='bg-myGrey font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Share Profile</button>
+            <button onClick={share} className='bg-myGrey font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Share Profile</button>
             <Link onClick={logout} className='bg-myGrey flex items-center justify-center font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Logout</Link>
           </span>
         </div>
