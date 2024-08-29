@@ -57,6 +57,14 @@ const postSchema = new mongoose.Schema({
     manufactured: {
         type: Date,
         required: true // Date of manufacture is required
+    },
+    uid: {
+        type: String,
+        required: true
+    },
+    propics: {
+        type: [String], // Array of strings to store multiple URLs
+        required: true 
     }
 }, {
     timestamps: true // Automatically add createdAt and updatedAt fields

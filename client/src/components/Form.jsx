@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { hostname } from '../config';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as DragIcon } from '../assets/svg/DragSVG.svg';
 
 const Form = () => {
 
@@ -272,23 +273,62 @@ const Form = () => {
 
     // console.warn(cities)
 
+    const [error, setError] = useState('');
+    const [selectedFiles, setSelectedFiles] = useState([]);
+
+    const user = localStorage.getItem("user");
+    const userObj = JSON.parse(user);
+    const uid = userObj._id;
+
+    const handleFileChange = (event) => {
+        setError('');
+        const files = Array.from(event.target.files);
+
+        if (files.length > 6) {
+            setError('You can only upload a maximum of 6 images.');
+            event.target.value = ''; // Clear the input
+            setSelectedFiles([]);
+            return;
+        }
+
+        setSelectedFiles(files);
+    };
+
     const postData = async (e) => {
         e.preventDefault();
         try {
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('brand', brand);
+            formData.append('description', description);
+            formData.append('mileage', mileage);
+            formData.append('price', price);
+            formData.append('fuel', fuel);
+            formData.append('transmission', transmission);
+            formData.append('owner', owner);
+            // formData.append('state', state);
+            // formData.append('city', city);
+            // formData.append('neighbourhood', neighbourhood);
+            formData.append('location', JSON.stringify({ state, city, neighbourhood }));
+            formData.append('manufactured', manufactured);
+            formData.append('uid', uid);
+            if (selectedFiles && selectedFiles.length > 0) {
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    formData.append('propics', selectedFiles[i]); // Append each file with the same key 'propics'
+                }
+            }
             // console.log(title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured)
-            const response = await axios.post(`${hostname}/post`, { title, brand, description, mileage, price, fuel, transmission, owner, location:{state, city, neighbourhood}, manufactured });
-            // console.log(response.data)
-            // if (!response.data.result) {
-            //     // console.log(response.data)
-            //     // localStorage.setItem("user", JSON.stringify(response.data));
-            //     navigate('/');
-            //     setError("");
-            // } else {
-            //     setError(response.data.result);
-            // }
-            if(response){
+            const response = await axios.post(`${hostname}/post`, formData,{
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            if (!response.data.result) {
                 <p className='flex items-center justify-center text-2xl'>upload success</p>
                 navigate('/')
+            } else {
+                // setError(response.data.result);
+                console.log(response.data.result);
             }
         } catch (error) {
             // setError("An error occurred while logging in. Please try again.");
@@ -299,12 +339,12 @@ const Form = () => {
 
     return (
         /* From Uiverse.io by themrsami */
-        <div className="flex flex-col items-center justify-center h-fit">
-            <div className="w-full max-w-xl bg-myGrey rounded-myRound shadow-myShadow p-6">
+        <div className="flex w-fit flex-col items-center justify-center h-fit">
+            <div className="w-fit  bg-myGrey rounded-myRound shadow-myShadow p-6">
                 <h2 className="text-2xl font-bold mb-4">POST your CAR</h2>
-                <form className="flex flex-col w-full" onSubmit={postData}>
-                    <div className='flex w-full gap-5'>
-                        <div className='flex flex-col w-1/2'>
+                <form className="flex flex-col items-center justify-between w-fit" encType="multipart/form-data" onSubmit={postData}>
+                    <div className='flex w-fit gap-5 items-center justify-evenly flex-wrap'>
+                        <div className='flex flex-col w-[295px]'>
                             <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
                             <input placeholder="Brand" onChange={(e) => setBrand(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
                             <textarea placeholder='Description' onChange={(e) => setDescription(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"></textarea>
@@ -312,7 +352,7 @@ const Form = () => {
                             <input placeholder="Price" onChange={(e) => setPrice(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text" />
                         </div>
                         {/* <input placeholder="Location" className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" type="text"/> */}
-                        <div className='flex flex-col w-1/2'>
+                        <div className='flex flex-col w-[295px]'>
                             <label className="text-sm mb-2  cursor-pointer" htmlFor="fuel">
                                 Fuel
                             </label>
@@ -346,7 +386,7 @@ const Form = () => {
                             </select>
                             <label className="text-sm mb-2  cursor-pointer" id='location'>Location</label>
                             {/* value={state} value={selectedState}*/}
-                            <select value={state}  onChange={(e) => {setState(e.target.value); handleStateChange(e);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="location">
+                            <select value={state} onChange={(e) => { setState(e.target.value); handleStateChange(e); }} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="location">
                                 <option value="none" disabled>Choose your state</option>
                                 {Object.keys(stateCityMapping).map((state) => (
                                     <option key={state} value={state}>
@@ -357,7 +397,7 @@ const Form = () => {
                             {
                                 selectedState && (
                                     // value={city} value={selectedCity}
-                                    <select value={city} onChange={(e) =>{ setCity(e.target.value); handleStateChange2(e);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                    <select value={city} onChange={(e) => { setCity(e.target.value); handleStateChange2(e); }} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
                                         <option value="none" disabled>Choose your city</option>
                                         {Object.keys(cities).map((city) => (
                                             <option key={city} value={city}>
@@ -369,7 +409,7 @@ const Form = () => {
                             }
                             {
                                 selectedCity && (
-                                    <select value={neighbourhood} onChange={(e) => { setNeighbourhood(e.target.value);}} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
+                                    <select value={neighbourhood} onChange={(e) => { setNeighbourhood(e.target.value); }} className="bg-gray-100  border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150" id="city">
                                         <option value="none" disabled>Choose your neighbourhood</option>
                                         {neighbourhood1.map((neighbourhood1) => (
                                             <option key={neighbourhood1} value={neighbourhood1}>
@@ -384,9 +424,48 @@ const Form = () => {
                             </label>
                             <input onChange={(e) => setManufactured(e.target.value)} className="bg-gray-100  border-0 rounded-md p-2" id="manufactured" type="date" />
                         </div>
+                        <div className="flex flex-col items-center">
+                            <label htmlFor="fileInput" className="mb-2 font-semibold">
+                                Upload up to 6 images (JPG, JPEG)
+                            </label>
+                            <label
+                                htmlFor="file"
+                                className="flex flex-col justify-center items-center w-[250px] h-[190px] border-2 border-dashed border-gray-300 text-center p-2 text-gray-600 cursor-pointer"
+                            >
+                                <span>
+                                    <DragIcon />
+                                </span>
+                                <p>Click here to select a file!</p>
+                            </label>
+                            <input
+                                className="hidden"
+                                name="propic"
+                                id="file"
+                                type="file"
+                                multiple
+                                accept=".jpg, .jpeg"
+                                onChange={handleFileChange}
+                            />
+
+                            {/* Image Previews */}
+                            {selectedFiles.length > 0 && (
+                                <div className="mt-4 grid grid-cols-3 gap-2">
+                                    {selectedFiles.map((file, index) => (
+                                        <div key={index} className="w-24 h-24 overflow-hidden border border-gray-200 rounded">
+                                            <img
+                                                src={URL.createObjectURL(file)}
+                                                alt={`Selected ${index + 1}`}
+                                                className="object-cover w-full h-full"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            {error && <span className="text-red-500">{error}</span>}
+                        </div>
                     </div>
                     {/* <p className=" mt-4"> Already have an account? <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="#">Login</a></p> */}
-                    <button className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150" type="submit">Upload</button>
+                    <button className="bg-gradient-to-r w-48 from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150" type="submit">Upload</button>
                 </form>
             </div>
         </div>

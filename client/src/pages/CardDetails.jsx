@@ -54,7 +54,7 @@ const CardDetails = () => {
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-  
+
   const manufacturedDate = formatDate(post.manufactured);
   const postedDate = formatDate(post.createdAt);
 
@@ -119,21 +119,29 @@ const CardDetails = () => {
       {post && (
         <>
           <div className='flex gap-5'>
-            <div className='w-[829px] h-[490px] overflow-hidden bg-myGrey rounded-myRound'>
-              <canvas id="canvas" ref={canvasRef} className='w-full h-full'></canvas>
+            <div className='w-[829px] h-[490px] flex items-center justify-center overflow-hidden bg-myGrey rounded-myRound'>
+              {/* <canvas id="canvas" ref={canvasRef} className='w-full h-full'></canvas> */}
+              <img className='h-full' src={post.propics[0]} alt="main-pic" />
             </div>
             <div className='w-[431px] h-[490px] rounded-myRound flex gap-5'>
-              <div className='flex flex-wrap gap-5'>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound'>Image</div>
+              <div className='flex h-fit flex-wrap gap-5'>
+                {post.propics.map((pic, index) => (
+                  <div key={index} className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>
+                    <img className='h-full w-full object-cover' src={pic} alt={`sub-pic-${index}`} />
+                  </div>
+                ))}
+
+                {/* <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>
+                <img className='h-full' src={post.propics[1]} alt="sub-pic" />
+                </div>
+                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>Image</div>
+                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>Image</div>
+                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>Image</div> */}
               </div>
-              <div className='flex flex-col justify-between'>
+              {/* <div className='flex flex-col justify-between'>
                 <div className='rounded-full w-[50px] h-[50px] bg-myGrey flex items-center justify-center'><ArrowUpIcon height={24} width={24} /></div>
                 <div className='rounded-full w-[50px] h-[50px] bg-myGrey flex items-center justify-center'><ArrowDownIcon height={24} width={24} /></div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className='flex gap-5'>

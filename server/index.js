@@ -59,50 +59,75 @@ app.post('/login', async (req, res) => {
     }
 })
 
-app.post('/post', async (req, res) => {
+app.post('/post', upload.array('propics', 6), async (req, res) => { // Handle up to 6 files
     try {
-        console.log(req.body);
-        const post = new Post(req.body);  // Create a new instance of the model with req.body
-        const savedPost = await post.save();  // Save the instance to the database
-        // console.warn(savedPost);
-        res.send(savedPost);
+        console.warn(req.body, req.files); // Log body and files to ensure they are being passed correctly
+
+        if (req.body && req.files && req.files.length > 0) {
+            // Parse the location JSON string back to an object
+            req.body.location = JSON.parse(req.body.location);
+
+            // Array to store the URLs of uploaded images
+            const propicURLs = [];
+
+            // Upload each image to Firebase and store the URL
+            for (const file of req.files) {
+                const uniqueSuffix = crypto.randomBytes(16).toString("hex");  // Generates a 32-character hexadecimal string
+                const uniqueFilename = `postpics/${uniqueSuffix}_${file.originalname}`;
+
+                const storageRef = ref(storage, uniqueFilename);
+                const snapshot = await uploadBytes(storageRef, file.buffer);
+                const downloadURL = await getDownloadURL(snapshot.ref);
+
+                propicURLs.push(downloadURL); // Store each file's download URL
+            }
+
+            // Add the array of URLs to the post data
+            req.body.propics = propicURLs;
+
+            const post = new Post(req.body);  // Create a new instance of the model with req.body
+            const savedPost = await post.save();  // Save the instance to the database
+            res.send(savedPost);
+        } else {
+            res.send({ result: 'Please fill all fields' });
+        }
     } catch (error) {
         console.error("Error saving document:", error.message, error.errors);
         res.status(500).send("Error saving document: " + error.message);
     }
 });
 
-app.get('/posts', async (req, res)=>{
+app.get('/posts', async (req, res) => {
     try {
         const posts = await Post.find();
         // console.warn(posts)
-        if(posts.length>0){
+        if (posts.length > 0) {
             res.send(posts);
-        }else{
+        } else {
             res.send("No posts exists");
         }
-    }catch{
+    } catch {
         res.status(500).send("Error fetching posts");
     }
 })
 
 app.get('/posts/:id', async (req, res) => {
     const { id } = req.params;
-  
+
     try {
-      const post = await Post.findById(id);
-  
-      if (post) {
-        res.send(post);
-      } else {
-        res.status(404).send('Post not found');
-      }
+        const post = await Post.findById(id);
+
+        if (post) {
+            res.send(post);
+        } else {
+            res.status(404).send('Post not found');
+        }
     } catch (error) {
-      console.error('Error fetching post:', error);
-      res.status(500).send('Error fetching post');
+        console.error('Error fetching post:', error);
+        res.status(500).send('Error fetching post');
     }
-  });
-  
+});
+
 
 app.listen(8000, function () {
     console.log("Server started on http://localhost:8000/");

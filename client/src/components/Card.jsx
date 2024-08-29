@@ -17,7 +17,7 @@ const Card = ({post}) => {
                 <div className='absolute top-5 right-5 bg-myGrey rounded-full h-[1.875rem] w-[1.875rem] flex items-center justify-center'>
                     <SaveIcon height={24} width={24} />
                 </div>
-                <img src="https://picsum.photos/seed/picsum/200/300" alt="random" className='h-full'/>
+                <img src={post.propics[0]} alt="thumbnail" className='h-full'/>
             </div>
             <div className='w-full h-[8.6875rem] absolute top-[50.45%]'>
                 <div className='w-full absolute top-[10%]'>
