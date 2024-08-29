@@ -25,6 +25,8 @@ const Form = () => {
     const [neighbourhood, setNeighbourhood] = useState("none");
     const [manufactured, setManufactured] = useState("none");
 
+    const [loading, setLoading] = useState(false);
+
 
     const navigate = useNavigate();
 
@@ -296,6 +298,7 @@ const Form = () => {
 
     const postData = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const formData = new FormData();
             formData.append('title', title);
@@ -318,7 +321,7 @@ const Form = () => {
                 }
             }
             // console.log(title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured)
-            const response = await axios.post(`${hostname}/post`, formData,{
+            const response = await axios.post(`${hostname}/post`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -333,6 +336,8 @@ const Form = () => {
         } catch (error) {
             // setError("An error occurred while logging in. Please try again.");
             console.log(error)
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -465,7 +470,9 @@ const Form = () => {
                         </div>
                     </div>
                     {/* <p className=" mt-4"> Already have an account? <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="#">Login</a></p> */}
-                    <button className="bg-gradient-to-r w-48 from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150" type="submit">Upload</button>
+                    <button disabled={loading} className={`bg-gradient-to-r w-48 from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150" type="submit`}>
+                        {loading ? 'Uploading...' : 'Upload'}
+                    </button>
                 </form>
             </div>
         </div>

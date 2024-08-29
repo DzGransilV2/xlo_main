@@ -1,10 +1,17 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { hostname } from '../config';
+import Card from './Card';
 
 const ProfileCard = ({ logout }) => {
 
+  const [post, setPost] = React.useState([]);
+
   const user = localStorage.getItem("user");
   const userObject = JSON.parse(user);
+
+  // console.log(userObject._id)
 
   const share = () => {
     const url = window.location.href;
@@ -13,7 +20,28 @@ const ProfileCard = ({ logout }) => {
     }).catch(err => {
       console.error('Failed to copy:', err);
     });
-  }; 
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${hostname}/postsUser`, {
+          params: { uid: userObject._id }
+        });
+        // console.log(response.data);
+        if (response.data.status) {
+          setPost(response.data.result);
+        } else {
+          setPost(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, [hostname, userObject._id]);
+  
 
   return (
     <div className='w-full h-auto flex flex-col gap-[100px] items-center'>
@@ -32,7 +60,13 @@ const ProfileCard = ({ logout }) => {
         </div>
       </div>
       <div className='flex flex-wrap h-auto gap-5'>
-        <span className='font-semibold text-xl'>You haven&apos;t listed anything yet</span>
+        {post && post.length > 0 ? (
+          post.map((item, index) => (
+            <Card key={index} post={item} />
+          ))
+        ) : (
+          <span className='font-semibold text-xl'>You haven&apos;t listed anything yet</span>
+        )}
       </div>
     </div>
   )

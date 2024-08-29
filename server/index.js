@@ -111,6 +111,23 @@ app.get('/posts', async (req, res) => {
     }
 })
 
+app.get('/postsUser', async (req, res) => {
+    try {
+      const { uid } = req.query; // Use req.query for query parameters
+      const posts = await Post.find({ uid }); // Find posts by userId
+      
+      if (posts.length > 0) {
+        res.json(posts); // Send the posts as JSON
+      } else {
+        res.status(404).send("No posts exist");
+      }
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      res.status(500).send("Error fetching posts");
+    }
+  });
+  
+
 app.get('/posts/:id', async (req, res) => {
     const { id } = req.params;
 
