@@ -20,6 +20,13 @@ const CardDetails = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [newMainImg, setNewMainImg] = useState(null);
+
+  useEffect(() => {
+    if (post && post.propics && post.propics.length > 0) {
+      setNewMainImg(post.propics[0]);
+    }
+  }, [post]);
 
   const { id } = useParams();
 
@@ -114,6 +121,10 @@ const CardDetails = () => {
   //   };
   // }, []);
 
+  const storeURL = (pic) => {
+    setNewMainImg(pic);
+  }
+
   return (
     <div className='flex flex-col items-center justify-center gap-5 w-full h-auto'>
       {post && (
@@ -121,22 +132,15 @@ const CardDetails = () => {
           <div className='flex gap-5'>
             <div className='w-[829px] h-[490px] flex items-center justify-center overflow-hidden bg-myGrey rounded-myRound'>
               {/* <canvas id="canvas" ref={canvasRef} className='w-full h-full'></canvas> */}
-              <img className='h-full' src={post.propics[0]} alt="main-pic" />
+              <img className='h-full' src={newMainImg} alt="main-pic" />
             </div>
             <div className='w-[431px] h-[490px] rounded-myRound flex gap-5'>
               <div className='flex h-fit flex-wrap gap-5'>
                 {post.propics.map((pic, index) => (
                   <div key={index} className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>
-                    <img className='h-full w-full object-cover' src={pic} alt={`sub-pic-${index}`} />
+                    <img className='h-full w-full object-cover' onClick={() => storeURL(pic)} src={pic} alt={`sub-pic-${index}`} />
                   </div>
                 ))}
-
-                {/* <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>
-                <img className='h-full' src={post.propics[1]} alt="sub-pic" />
-                </div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>Image</div>
-                <div className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>Image</div> */}
               </div>
               {/* <div className='flex flex-col justify-between'>
                 <div className='rounded-full w-[50px] h-[50px] bg-myGrey flex items-center justify-center'><ArrowUpIcon height={24} width={24} /></div>
