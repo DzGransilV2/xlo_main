@@ -175,7 +175,7 @@ const CardDetails = () => {
             <div className='w-[431px] h-[306px] overflow-hidden bg-myGrey rounded-myRound'>
               <MapContainer
                 center={[coordinates.lat, coordinates.lon]}
-                zoom={14}
+                zoom={15}
                 style={{ height: "100%", width: "100%" }}
               >
                 <MapView center={[coordinates.lat, coordinates.lon]} />
