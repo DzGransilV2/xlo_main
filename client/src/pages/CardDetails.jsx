@@ -10,6 +10,7 @@ import { hostname } from '../config';
 import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
+import Canvas from '../components/Canvas';
 
 
 const CardDetails = () => {
@@ -119,7 +120,8 @@ const CardDetails = () => {
         <>
           <div className='flex gap-5'>
             <div className='w-[829px] h-[490px] flex items-center justify-center overflow-hidden bg-myGrey rounded-myRound'>
-              <img className='h-full' src={newMainImg} alt="main-pic" />
+              {/* <img className='h-full' src={newMainImg} alt="main-pic" /> */}
+              {/* <Canvas/> */}
             </div>
             <div className='w-[431px] h-[490px] rounded-myRound flex gap-5'>
               <div className='flex h-fit flex-wrap gap-5'>
