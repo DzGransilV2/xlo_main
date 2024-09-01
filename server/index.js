@@ -59,6 +59,20 @@ app.post('/login', async (req, res) => {
     }
 })
 
+app.get('/users', async (req, res) => {
+    const { _id } = req.query;
+    if (_id) {
+        let user = await User.find({_id}).select('-password');
+        if (user) {
+            res.send(user);
+        } else {
+            res.send({ result: 'No user found' });
+        }
+    } else {
+        res.send({ result: 'no uid found' });
+    }
+})
+
 app.post('/post', upload.array('propics', 6), async (req, res) => { // Handle up to 6 files
     try {
         console.warn(req.body, req.files); // Log body and files to ensure they are being passed correctly

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { hostname } from '../config';
 import Card from './Card';
 
-const ProfileCard = ({ logout }) => {
+const ProfileCard = ({ logout, UID }) => {
 
   const [post, setPost] = React.useState([]);
   const [show, setShow] = React.useState(false);
@@ -12,7 +12,7 @@ const ProfileCard = ({ logout }) => {
   const user = localStorage.getItem("user");
   const userObject = JSON.parse(user);
 
-  
+
   // console.log(userObject._id)
   useEffect(()=>{
     if(userObject._id){
@@ -52,13 +52,13 @@ const ProfileCard = ({ logout }) => {
 
   return (
     <div className='w-full h-auto flex flex-col gap-[100px] items-center'>
-      <div className='flex gap-5'>
+      <div className='flex items-center justify-center gap-5'>
         <div className='w-[130px] h-[130px] bg-myGrey rounded-full flex items-center justify-center overflow-hidden'>
           <img src={userObject.userpic} alt="pro-pic" className='w-full' />
         </div>
         <div className='flex flex-col justify-center gap-[10px]'>
           <span className='font-semibold text-2xl'>{userObject.uname}</span>
-          {/* <span className='font-normal text-base'>{userObject.email}</span> */}
+          <span className='font-normal text-base'>{userObject.email}</span>
           <span className='font-normal text-base'>Member since Aug 2024</span>
           <span className='flex gap-5'>
             <button onClick={share} className='bg-myGrey font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Share Profile</button>
