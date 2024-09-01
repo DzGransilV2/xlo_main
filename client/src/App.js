@@ -7,6 +7,7 @@ import CardDetails from './pages/CardDetails';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import SubProfile from './pages/SubProfile';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/card/:id" element={<CardDetails/>}/>
                 <Route path="/profile" element={<Profile/>}/>
+                <Route path="/user/profile/:id" element={<SubProfile/>}/>
                 {/* </Route> */}
               </Routes>
               {/* <CardDetails/> */}
