@@ -7,7 +7,7 @@ import '../styles/leaflet.css';
 import * as GaussianSplats3D from '@mkkellogg/gaussian-splats-3d';
 import axios from 'axios';
 import { hostname } from '../config';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import Canvas from '../components/Canvas';
@@ -164,7 +164,7 @@ const CardDetails = () => {
             </div>
             <div className='w-[431px] h-[155px] bg-myGrey rounded-myRound flex flex-col items-center justify-center gap-5 py-[30px] px-[95px]'>
               <span className='font-bold text-2xl'>₹ {post.price}</span>
-              <button className='w-[240px] h-10 rounded-myRound bg-white font-semibold text-base px-14 py-2'>Chat with Seller</button>
+              <Link to={`/user/profile/${post.uid}`} className='w-[240px] h-10 rounded-myRound bg-white font-semibold text-base px-14 py-2'>Chat with Seller</Link>
             </div>
           </div>
           <div className='flex gap-5 text-xl'>

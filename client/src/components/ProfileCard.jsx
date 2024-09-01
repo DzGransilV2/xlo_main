@@ -12,13 +12,13 @@ const ProfileCard = ({ logout }) => {
   const user = localStorage.getItem("user");
   const userObject = JSON.parse(user);
 
+  
   // console.log(userObject._id)
-
   useEffect(()=>{
     if(userObject._id){
       setShow(true);
     }
-  }, [userObject]);
+  }, [userObject])
 
   const share = () => {
     const url = window.location.href;
