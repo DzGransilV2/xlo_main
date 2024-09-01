@@ -40,7 +40,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className={`nav-item text-hover ${activeLink==='profile'?'active': ''}`}>
-          <Link onClick={()=>handleSetActiveLink('profile')} to={`/profile/`} className='nav-item'>
+          <Link onClick={()=>handleSetActiveLink('profile')} to={`/profile`} className='nav-item'>
             <span><UserIcon height={24} width={24} /></span>
             <span className='nav-text'>Profile</span>
           </Link>

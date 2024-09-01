@@ -7,11 +7,18 @@ import Card from './Card';
 const ProfileCard = ({ logout }) => {
 
   const [post, setPost] = React.useState([]);
+  const [show, setShow] = React.useState(false);
 
   const user = localStorage.getItem("user");
   const userObject = JSON.parse(user);
 
   // console.log(userObject._id)
+
+  useEffect(()=>{
+    if(userObject._id){
+      setShow(true);
+    }
+  }, [userObject]);
 
   const share = () => {
     const url = window.location.href;
@@ -55,7 +62,7 @@ const ProfileCard = ({ logout }) => {
           <span className='font-normal text-base'>Member since Aug 2024</span>
           <span className='flex gap-5'>
             <button onClick={share} className='bg-myGrey font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Share Profile</button>
-            <Link onClick={logout} className='bg-myGrey flex items-center justify-center font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Logout</Link>
+            {show && <Link onClick={logout} className='bg-myGrey flex items-center justify-center font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Logout</Link> }
           </span>
         </div>
       </div>
