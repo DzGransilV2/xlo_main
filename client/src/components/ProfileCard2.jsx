@@ -33,6 +33,25 @@ const ProfileCard2 = ({ logout, UID }) => {
     };
 
     useEffect(() => {
+
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`${hostname}/users`, {
+                    params: { _id: UID }
+                });
+                // console.log(response.data);
+                if (response.data.result) {
+                    setUser(response.data.result);
+                } else {
+                    setUser(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchUserData();
+
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${hostname}/postsUser`, {
@@ -43,26 +62,6 @@ const ProfileCard2 = ({ logout, UID }) => {
                     setPost(response.data.result);
                 } else {
                     setPost(response.data);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    }, [hostname, UID]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${hostname}/users`, {
-                    params: { _id: UID }
-                });
-                console.log(response.data);
-                if (response.data.result) {
-                    setUser(response.data.result);
-                } else {
-                    setUser(response.data);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
