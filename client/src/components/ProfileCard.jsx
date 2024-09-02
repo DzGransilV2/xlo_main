@@ -1,24 +1,21 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { hostname } from '../config';
 import Card from './Card';
 
 const ProfileCard = ({ logout, UID }) => {
-
   const [post, setPost] = React.useState([]);
   const [show, setShow] = React.useState(false);
 
   const user = localStorage.getItem("user");
   const userObject = JSON.parse(user);
 
-
-  // console.log(userObject._id)
-  useEffect(()=>{
-    if(userObject._id){
+  useEffect(() => {
+    if (userObject._id) {
       setShow(true);
     }
-  }, [userObject])
+  }, [userObject]);
 
   const share = () => {
     const url = window.location.href;
@@ -35,20 +32,22 @@ const ProfileCard = ({ logout, UID }) => {
         const response = await axios.get(`${hostname}/postsUser`, {
           params: { uid: userObject._id }
         });
-        // console.log(response.data);
-        if (response.data.status) {
-          setPost(response.data.result);
-        } else {
+
+        // Check if the response is an empty array or contains posts
+        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
           setPost(response.data);
+        } else {
+          setPost([]); // Set post to an empty array if no posts are found
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-  
-    fetchData();
-  }, [hostname, userObject._id]);
-  
+
+    if (userObject._id) {
+      fetchData();
+    }
+  }, [userObject._id]);
 
   return (
     <div className='w-full h-auto flex flex-col gap-[100px] items-center'>
@@ -62,7 +61,7 @@ const ProfileCard = ({ logout, UID }) => {
           <span className='font-normal text-base'>Member since Aug 2024</span>
           <span className='flex gap-5'>
             <button onClick={share} className='bg-myGrey font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Share Profile</button>
-            {show && <Link onClick={logout} className='bg-myGrey flex items-center justify-center font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Logout</Link> }
+            {show && <Link onClick={logout} className='bg-myGrey flex items-center justify-center font-semibold text-base p-[9px] rounded-myRound w-[119px]'>Logout</Link>}
           </span>
         </div>
       </div>
@@ -76,7 +75,7 @@ const ProfileCard = ({ logout, UID }) => {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default ProfileCard
+export default ProfileCard;

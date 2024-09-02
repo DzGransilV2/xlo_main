@@ -7,10 +7,12 @@ export const login = createAsyncThunk(
     async (userCredential) => {
         try {
             const response = await axios.post(`${hostname}/login`, userCredential);
-            if (!response.data.result) {
-                localStorage.setItem("user", JSON.stringify(response.data));
+            console.log(response.data.result);
+            if (response.data.auth) {
+                localStorage.setItem("user", JSON.stringify(response.data.user));
+                localStorage.setItem("token", JSON.stringify(response.data.auth));
             }
-            console.log(response.data)
+            // console.log(response.data)
             return response.data;
         } catch (error) {
             console.log("An error occurred while logging in. Please try again.");
@@ -29,9 +31,10 @@ export const signUp = createAsyncThunk(
                     'Content-Type': 'multipart/form-data',  // Ensure axios handles FormData correctly
                 },
             });
-
-            if (response.data && !response.data.result) {
-                localStorage.setItem("user", JSON.stringify(response.data));
+            // console.log("Response:",response.data)
+            if (response.data) {
+                localStorage.setItem("user", JSON.stringify(response.data.user));
+                localStorage.setItem("token", JSON.stringify(response.data.auth));
             }
 
             return response.data;

@@ -5,9 +5,10 @@ const User = require('./models/User');
 const Post = require('./models/Post')
 const app = express();
 const crypto = require('crypto');
-const { initializeFirebaseApp, getFirebaseStorage } = require('./config/config');
+const { initializeFirebaseApp, getFirebaseStorage, JWT_KEY_SECRET } = require('./config/config');
 const multer = require('multer');
 const { ref, uploadBytes, getDownloadURL } = require('firebase/storage');
+const Jwt = require('jsonwebtoken');
 
 initializeFirebaseApp();
 const storage = getFirebaseStorage();
@@ -29,14 +30,19 @@ app.post('/signup', upload.single('userpic'), async (req, res) => {
             const downloadURL = await getDownloadURL(snapshot.ref);
 
             // Save user data with the profile picture URL in MongoDB
-            let user = new User({
+            let userData = new User({
                 ...req.body,
                 userpic: downloadURL  // Store the download URL in MongoDB
             });
-            let result = await user.save();
-            result = result.toObject();
-            delete result.password;
-            res.send(result);
+            let user = await userData.save();
+            user = user.toObject();
+            delete user.password;
+            Jwt.sign({ user }, JWT_KEY_SECRET, { expiresIn: "1h" }, (err, token) => {
+                if (err) {
+                    res.send({ result: 'Something went wrong' });
+                }
+                res.send({ user, auth: token });
+            });
         } else {
             res.send({ result: 'Please fill all fields and upload a user picture' });
         }
@@ -50,7 +56,12 @@ app.post('/login', async (req, res) => {
     if (req.body.uname && req.body.password) {
         let user = await User.findOne(req.body).select('-password');
         if (user) {
-            res.send(user);
+            Jwt.sign({ user }, JWT_KEY_SECRET, { expiresIn: "1h" }, (err, token) => {
+                if (err) {
+                    res.send({ result: 'Something went wrong' });
+                }
+                res.send({ user, auth: token });
+            });
         } else {
             res.send({ result: 'No user found' });
         }
@@ -62,7 +73,7 @@ app.post('/login', async (req, res) => {
 app.get('/users', async (req, res) => {
     const { _id } = req.query;
     if (_id) {
-        let user = await User.find({_id}).select('-password');
+        let user = await User.find({ _id }).select('-password');
         if (user) {
             res.send(user);
         } else {
@@ -127,20 +138,22 @@ app.get('/posts', async (req, res) => {
 
 app.get('/postsUser', async (req, res) => {
     try {
-      const { uid } = req.query; // Use req.query for query parameters
-      const posts = await Post.find({ uid }); // Find posts by userId
-      
-      if (posts.length > 0) {
-        res.json(posts); // Send the posts as JSON
-      } else {
-        res.status(404).send("No posts exist");
-      }
+        const { uid } = req.query; 
+        const posts = await Post.find({ uid });
+
+        if (posts.length > 0) {
+            res.json(posts); 
+        } else {
+            // Return a 200 status with an empty array if no posts exist
+            res.status(200).json([]);
+        }
     } catch (error) {
-      console.error('Error fetching posts:', error);
-      res.status(500).send("Error fetching posts");
+        console.error('Error fetching posts:', error);
+        res.status(500).send("Error fetching posts");
     }
-  });
-  
+});
+
+
 
 app.get('/posts/:id', async (req, res) => {
     const { id } = req.params;

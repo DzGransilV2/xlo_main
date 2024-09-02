@@ -39,4 +39,7 @@ const initializeFirebaseApp = () =>{
 const getFirebaseApp = () => app;
 const getFirebaseStorage = () => storage;
 
-module.exports = {initializeFirebaseApp, getFirebaseApp, getFirebaseStorage}
+const JWT_KEY_SECRET = process.env.JWT_KEY;
+
+
+module.exports = {initializeFirebaseApp, getFirebaseApp, getFirebaseStorage, JWT_KEY_SECRET}
