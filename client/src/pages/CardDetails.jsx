@@ -30,13 +30,19 @@ const CardDetails = () => {
     iconAnchor: [16, 32], 
     popupAnchor: [0, -32] 
   });
-  
+
+
+  // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
+  const token = JSON.parse(localStorage.getItem('token'));
+  console.log(token);
 
   useEffect(() => {
     const fetchPostData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${hostname}/posts/${id}`);
+        const response = await axios.get(`${hostname}/posts/${id}`,{
+          headers: {'Authorization': `Bearer ${token}`}
+        });
         setPost(response.data);
       } catch (err) {
         console.error('Error fetching post data:', err);

@@ -299,6 +299,11 @@ const Form = () => {
     const postData = async (e) => {
         e.preventDefault();
         setLoading(true);
+
+        const token = JSON.parse(localStorage.getItem('token'));
+        // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
+        console.log(token);
+
         try {
             const formData = new FormData();
             formData.append('title', title);
@@ -321,9 +326,11 @@ const Form = () => {
                 }
             }
             // console.log(title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured)
+            console.log('Authorization header:', `Bearer ${token}`);
             const response = await axios.post(`${hostname}/post`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
                 },
             });
             if (!response.data.result) {

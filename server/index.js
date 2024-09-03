@@ -9,13 +9,19 @@ const { initializeFirebaseApp, getFirebaseStorage, JWT_KEY_SECRET } = require('.
 const multer = require('multer');
 const { ref, uploadBytes, getDownloadURL } = require('firebase/storage');
 const Jwt = require('jsonwebtoken');
+const authenticateToken = require('./middleware/auth');
 
 initializeFirebaseApp();
 const storage = getFirebaseStorage();
 
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*', // Adjust as needed
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Ensure Authorization header is allowed
+}));
+
 const upload = multer({ storage: multer.memoryStorage() });
 
 
@@ -37,7 +43,7 @@ app.post('/signup', upload.single('userpic'), async (req, res) => {
             let user = await userData.save();
             user = user.toObject();
             delete user.password;
-            Jwt.sign({ user }, JWT_KEY_SECRET, { expiresIn: "1h" }, (err, token) => {
+            Jwt.sign({ user }, JWT_KEY_SECRET, { expiresIn: "7d" }, (err, token) => {
                 if (err) {
                     res.send({ result: 'Something went wrong' });
                 }
@@ -56,7 +62,7 @@ app.post('/login', async (req, res) => {
     if (req.body.uname && req.body.password) {
         let user = await User.findOne(req.body).select('-password');
         if (user) {
-            Jwt.sign({ user }, JWT_KEY_SECRET, { expiresIn: "1h" }, (err, token) => {
+            Jwt.sign({ user }, JWT_KEY_SECRET, { expiresIn: "7d" }, (err, token) => {
                 if (err) {
                     res.send({ result: 'Something went wrong' });
                 }
@@ -70,7 +76,7 @@ app.post('/login', async (req, res) => {
     }
 })
 
-app.get('/users', async (req, res) => {
+app.get('/users', authenticateToken, async (req, res) => {
     const { _id } = req.query;
     if (_id) {
         let user = await User.find({ _id }).select('-password');
@@ -84,7 +90,7 @@ app.get('/users', async (req, res) => {
     }
 })
 
-app.post('/post', upload.array('propics', 6), async (req, res) => { // Handle up to 6 files
+app.post('/post', authenticateToken, upload.array('propics', 6), async (req, res) => { // Handle up to 6 files
     try {
         console.warn(req.body, req.files); // Log body and files to ensure they are being passed correctly
 
@@ -122,21 +128,22 @@ app.post('/post', upload.array('propics', 6), async (req, res) => { // Handle up
     }
 });
 
-app.get('/posts', async (req, res) => {
+app.get('/posts', authenticateToken, async (req, res) => {
     try {
         const posts = await Post.find();
         // console.warn(posts)
         if (posts.length > 0) {
             res.send(posts);
         } else {
-            res.send("No posts exists");
+            res.status(200).send("No posts exists");
         }
     } catch {
+        console.error('Error fetching posts:', error);
         res.status(500).send("Error fetching posts");
     }
 })
 
-app.get('/postsUser', async (req, res) => {
+app.get('/postsUser', authenticateToken, async (req, res) => {
     try {
         const { uid } = req.query; 
         const posts = await Post.find({ uid });
@@ -155,7 +162,7 @@ app.get('/postsUser', async (req, res) => {
 
 
 
-app.get('/posts/:id', async (req, res) => {
+app.get('/posts/:id', authenticateToken, async (req, res) => {
     const { id } = req.params;
 
     try {

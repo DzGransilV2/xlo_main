@@ -26,11 +26,18 @@ const ProfileCard = ({ logout, UID }) => {
     });
   };
 
+  // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
+  const token = JSON.parse(localStorage.getItem('token'));
+  console.log(token);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${hostname}/postsUser`, {
-          params: { uid: userObject._id }
+          params: { uid: userObject._id },
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         });
 
         // Check if the response is an empty array or contains posts

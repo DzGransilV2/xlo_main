@@ -32,12 +32,17 @@ const ProfileCard2 = ({ logout, UID }) => {
         });
     };
 
+    // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
+    const token = JSON.parse(localStorage.getItem('token'));
+    console.log(token);
+
     useEffect(() => {
 
         const fetchUserData = async () => {
             try {
                 const response = await axios.get(`${hostname}/users`, {
-                    params: { _id: UID }
+                    params: { _id: UID },
+                    headers:{'Authorization': `Bearer ${token}`}
                 });
                 // console.log(response.data);
                 if (response.data.result) {
@@ -55,7 +60,8 @@ const ProfileCard2 = ({ logout, UID }) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${hostname}/postsUser`, {
-                    params: { uid: UID }
+                    params: { uid: UID },
+                    headers:{'Authorization': `Bearer ${token}`}
                 });
                 // console.log(response.data);
                 if (response.data.status) {
