@@ -333,7 +333,7 @@ const Form = () => {
                 formData.append('splatFile', selectedFile3D); // Append the .splat file
             }
             // console.log(title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured)
-            console.log('Authorization header:', `Bearer ${token}`);
+            // console.log('Authorization header:', `Bearer ${token}`);
             const response = await axios.post(`${hostname}/post`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -484,7 +484,7 @@ const Form = () => {
                             {/* {error && <span className="text-red-500">{error}</span>} */}
                         </div>
                         <div className="flex flex-col items-center">
-                        <label htmlFor="fileInput" className="mb-2 font-semibold">
+                            <label htmlFor="fileInput" className="mb-2 font-semibold">
                                 Upload SPLAT file for 3D view (Not Compulsory)
                             </label>
                             <label
@@ -511,6 +511,12 @@ const Form = () => {
                     <button disabled={loading} className={`bg-gradient-to-r w-48 from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150" type="submit`}>
                         {loading ? 'Uploading...' : 'Upload'}
                     </button>
+                    {loading && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-white">
+                            <div className="spinner border-t-4 border-black rounded-full w-16 h-16 animate-spin"></div>
+                            <p className="ml-4">Uploading...</p>
+                        </div>
+                    )}
                 </form>
             </div>
         </div>
