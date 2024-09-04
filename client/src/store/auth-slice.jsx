@@ -7,7 +7,7 @@ export const login = createAsyncThunk(
     async (userCredential) => {
         try {
             const response = await axios.post(`${hostname}/login`, userCredential);
-            console.log(response.data.result);
+            // console.log(response.data.result);
             if (response.data.auth) {
                 localStorage.setItem("user", JSON.stringify(response.data.user));
                 localStorage.setItem("token", JSON.stringify(response.data.auth));
@@ -25,7 +25,7 @@ export const signUp = createAsyncThunk(
     'auth/signup',  // Define a unique action type string
     async (formData, { rejectWithValue }) => {
         try {
-            console.log(formData)
+            // console.log(formData)
             const response = await axios.post(`${hostname}/signup`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',  // Ensure axios handles FormData correctly
