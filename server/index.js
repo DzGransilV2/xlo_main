@@ -94,7 +94,7 @@ app.post('/post', authenticateToken, upload.fields([{ name: 'propics', maxCount:
     try {
         console.warn(req.body, req.files); // Log body and files to ensure they are being passed correctly
 
-        if (req.body && req.files && req.files.propics && req.files.propics.length > 0 && req.files.splatFile && req.files.splatFile.length > 0) {
+        if (req.body && req.files && req.files.propics && req.files.propics.length > 0) {
             // Parse the location JSON string back to an object
             req.body.location = JSON.parse(req.body.location);
 
@@ -114,12 +114,15 @@ app.post('/post', authenticateToken, upload.fields([{ name: 'propics', maxCount:
             }
 
             // Upload the .splat file
-            const splatFile = req.files.splatFile[0];  // Assuming only one .splat file
-            const splatFilename = `splats/${crypto.randomBytes(16).toString("hex")}_${splatFile.originalname}`;
+            let splatDownloadURL = null;
+            if (req.files.splatFile && req.files.splatFile.length > 0) {
+                const splatFile = req.files.splatFile[0];  // Assuming only one .splat file
+                const splatFilename = `splats/${crypto.randomBytes(16).toString("hex")}_${splatFile.originalname}`;
 
-            const splatStorageRef = ref(storage, splatFilename);
-            const splatSnapshot = await uploadBytes(splatStorageRef, splatFile.buffer);
-            const splatDownloadURL = await getDownloadURL(splatSnapshot.ref);
+                const splatStorageRef = ref(storage, splatFilename);
+                const splatSnapshot = await uploadBytes(splatStorageRef, splatFile.buffer);
+                splatDownloadURL = await getDownloadURL(splatSnapshot.ref);
+            }
 
             // Add the array of URLs and splat file URL to the post data
             req.body.propics = propicURLs;
@@ -154,11 +157,11 @@ app.get('/posts', authenticateToken, async (req, res) => {
 
 app.get('/postsUser', authenticateToken, async (req, res) => {
     try {
-        const { uid } = req.query; 
+        const { uid } = req.query;
         const posts = await Post.find({ uid });
 
         if (posts.length > 0) {
-            res.json(posts); 
+            res.json(posts);
         } else {
             // Return a 200 status with an empty array if no posts exist
             res.status(200).json([]);

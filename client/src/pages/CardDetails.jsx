@@ -128,7 +128,7 @@ const CardDetails = () => {
         <>
           <div className='flex gap-5'>
             <div className='relative w-[829px] h-[490px] flex items-center justify-center overflow-hidden bg-myGrey rounded-myRound'>
-              <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />
+              {post.splatFileURL && <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />}
               {!isChecked ?
                 <img className='h-full' src={newMainImg} alt="main-pic" />
                 :
