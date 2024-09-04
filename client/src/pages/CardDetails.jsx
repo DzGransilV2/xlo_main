@@ -11,6 +11,7 @@ import { Link, useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import Canvas from '../components/Canvas';
+import Toggle from '../components/Toggle'
 
 
 const CardDetails = () => {
@@ -20,28 +21,29 @@ const CardDetails = () => {
   const [newMainImg, setNewMainImg] = useState(null);
   const [coordinates, setCoordinates] = useState({ lat: 51.505, lon: -0.09 }); // Default coordinates
   const [location, setLocation] = useState("");
+  const [isChecked, setIsChecked] = React.useState(false);
 
   const { id } = useParams();
   const canvasRef = useRef(null);
 
   const customIcon = L.icon({
-    iconUrl: 'https://img.icons8.com/?size=100&id=13800&format=png&color=000000', 
-    iconSize: [32, 32], 
-    iconAnchor: [16, 32], 
-    popupAnchor: [0, -32] 
+    iconUrl: 'https://img.icons8.com/?size=100&id=13800&format=png&color=000000',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
   });
 
 
   // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
   const token = JSON.parse(localStorage.getItem('token'));
-  console.log(token);
+  // console.log(token);
 
   useEffect(() => {
     const fetchPostData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${hostname}/posts/${id}`,{
-          headers: {'Authorization': `Bearer ${token}`}
+        const response = await axios.get(`${hostname}/posts/${id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
         });
         setPost(response.data);
       } catch (err) {
@@ -125,9 +127,13 @@ const CardDetails = () => {
       {post && (
         <>
           <div className='flex gap-5'>
-            <div className='w-[829px] h-[490px] flex items-center justify-center overflow-hidden bg-myGrey rounded-myRound'>
-              {/* <img className='h-full' src={newMainImg} alt="main-pic" /> */}
-              {/* <Canvas/> */}
+            <div className='relative w-[829px] h-[490px] flex items-center justify-center overflow-hidden bg-myGrey rounded-myRound'>
+              <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />
+              {!isChecked ?
+                <img className='h-full' src={newMainImg} alt="main-pic" />
+                :
+                <Canvas splat={post.splatFileURL} />
+              }
             </div>
             <div className='w-[431px] h-[490px] rounded-myRound flex gap-5'>
               <div className='flex h-fit flex-wrap gap-5'>

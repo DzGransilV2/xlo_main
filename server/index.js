@@ -17,9 +17,9 @@ const storage = getFirebaseStorage();
 
 app.use(express.json());
 app.use(cors({
-    origin: '*', // Adjust as needed
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'], // Ensure Authorization header is allowed
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -90,11 +90,11 @@ app.get('/users', authenticateToken, async (req, res) => {
     }
 })
 
-app.post('/post', authenticateToken, upload.array('propics', 6), async (req, res) => { // Handle up to 6 files
+app.post('/post', authenticateToken, upload.fields([{ name: 'propics', maxCount: 6 }, { name: 'splatFile', maxCount: 1 }]), async (req, res) => {
     try {
         console.warn(req.body, req.files); // Log body and files to ensure they are being passed correctly
 
-        if (req.body && req.files && req.files.length > 0) {
+        if (req.body && req.files && req.files.propics && req.files.propics.length > 0 && req.files.splatFile && req.files.splatFile.length > 0) {
             // Parse the location JSON string back to an object
             req.body.location = JSON.parse(req.body.location);
 
@@ -102,7 +102,7 @@ app.post('/post', authenticateToken, upload.array('propics', 6), async (req, res
             const propicURLs = [];
 
             // Upload each image to Firebase and store the URL
-            for (const file of req.files) {
+            for (const file of req.files.propics) {
                 const uniqueSuffix = crypto.randomBytes(16).toString("hex");  // Generates a 32-character hexadecimal string
                 const uniqueFilename = `postpics/${uniqueSuffix}_${file.originalname}`;
 
@@ -113,8 +113,17 @@ app.post('/post', authenticateToken, upload.array('propics', 6), async (req, res
                 propicURLs.push(downloadURL); // Store each file's download URL
             }
 
-            // Add the array of URLs to the post data
+            // Upload the .splat file
+            const splatFile = req.files.splatFile[0];  // Assuming only one .splat file
+            const splatFilename = `splats/${crypto.randomBytes(16).toString("hex")}_${splatFile.originalname}`;
+
+            const splatStorageRef = ref(storage, splatFilename);
+            const splatSnapshot = await uploadBytes(splatStorageRef, splatFile.buffer);
+            const splatDownloadURL = await getDownloadURL(splatSnapshot.ref);
+
+            // Add the array of URLs and splat file URL to the post data
             req.body.propics = propicURLs;
+            req.body.splatFileURL = splatDownloadURL;
 
             const post = new Post(req.body);  // Create a new instance of the model with req.body
             const savedPost = await post.save();  // Save the instance to the database

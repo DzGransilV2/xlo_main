@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as SPLAT from "https://cdn.jsdelivr.net/npm/gsplat@latest";
 
-const Canvas = () => {
+const Canvas = ({splat}) => {
     // State for loading
     const [loading, setLoading] = useState(true);
 
@@ -20,7 +20,7 @@ const Canvas = () => {
         const controls = new SPLAT.OrbitControls(camera, canvas);
 
         async function main() {
-            const url = "https://raw.githubusercontent.com/CedricGuillemet/dump/master/Halo_Believe.splat";
+            const url = `${splat}`;
 
             try {
                 // Load the .splat file asynchronously

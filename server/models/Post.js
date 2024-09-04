@@ -65,10 +65,13 @@ const postSchema = new mongoose.Schema({
     propics: {
         type: [String], // Array of strings to store multiple URLs
         required: true 
+    },
+    splatFileURL: {
+        type: String,  // String to store the URL of the uploaded .splat file
+        required: false
     }
 }, {
     timestamps: true // Automatically add createdAt and updatedAt fields
 });
-
 
 module.exports = mongoose.model('posts', postSchema);

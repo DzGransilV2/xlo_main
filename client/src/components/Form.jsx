@@ -277,6 +277,7 @@ const Form = () => {
 
     const [error, setError] = useState('');
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [selectedFile3D, setSelectedFile3D] = useState([]);
 
     const user = localStorage.getItem("user");
     const userObj = JSON.parse(user);
@@ -296,13 +297,19 @@ const Form = () => {
         setSelectedFiles(files);
     };
 
+    const handleFileChange2 = (event) => {
+        // setError('');
+        const file = event.target.files[0];
+        setSelectedFile3D(file);
+    };
+
     const postData = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         const token = JSON.parse(localStorage.getItem('token'));
         // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
-        console.log(token);
+        // console.log(token);
 
         try {
             const formData = new FormData();
@@ -314,9 +321,6 @@ const Form = () => {
             formData.append('fuel', fuel);
             formData.append('transmission', transmission);
             formData.append('owner', owner);
-            // formData.append('state', state);
-            // formData.append('city', city);
-            // formData.append('neighbourhood', neighbourhood);
             formData.append('location', JSON.stringify({ state, city, neighbourhood }));
             formData.append('manufactured', manufactured);
             formData.append('uid', uid);
@@ -324,6 +328,9 @@ const Form = () => {
                 for (let i = 0; i < selectedFiles.length; i++) {
                     formData.append('propics', selectedFiles[i]); // Append each file with the same key 'propics'
                 }
+            }
+            if (selectedFile3D) {
+                formData.append('splatFile', selectedFile3D); // Append the .splat file
             }
             // console.log(title, brand, description, mileage, price, fuel, transmission, owner, state, city, neighbourhood, manufactured)
             console.log('Authorization header:', `Bearer ${token}`);
@@ -474,6 +481,28 @@ const Form = () => {
                                 </div>
                             )}
                             {error && <span className="text-red-500">{error}</span>}
+                        </div>
+                        <div className="flex flex-col items-center">
+                        <label htmlFor="fileInput" className="mb-2 font-semibold">
+                                Upload SPLAT file for 3D view (Not Compulsory)
+                            </label>
+                            <label
+                                htmlFor="3dfile"
+                                className="flex flex-col justify-center items-center w-[250px] h-[190px] border-2 border-dashed border-gray-300 text-center p-2 text-gray-600 cursor-pointer"
+                            >
+                                <span>
+                                    <DragIcon />
+                                </span>
+                                <p>Click here to select a file!</p>
+                            </label>
+                            <input
+                                className="hidden"
+                                name="splatFile"
+                                id="3dfile"
+                                type="file"
+                                accept=".splat"
+                                onChange={handleFileChange2}
+                            />
                         </div>
                     </div>
                     {/* <p className=" mt-4"> Already have an account? <a className="text-sm text-blue-500 -200 hover:underline mt-4" href="#">Login</a></p> */}
