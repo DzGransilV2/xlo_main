@@ -34,7 +34,7 @@ const ProfileCard2 = ({ logout, UID }) => {
 
     // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
     const token = JSON.parse(localStorage.getItem('token'));
-    console.log(token);
+    // console.log(token);
 
     useEffect(() => {
 

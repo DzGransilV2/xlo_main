@@ -43,7 +43,7 @@ const SignUp = () => {
         }
 
         const userpic = selectedFile;
-        console.log(userpic)
+        // console.log(userpic)
 
         const formData = new FormData();  // Create a new FormData object
         formData.append('uname', uname);  // Append all form fields
@@ -57,7 +57,7 @@ const SignUp = () => {
 
         dispatch(signUp(formData))
             .then((result) => {
-                console.log(result.payload.result)
+                // console.log(result.payload.result)
                 if (result.payload && !result.payload.result) {
                     setUname("");
                     setEmail("");
@@ -67,7 +67,7 @@ const SignUp = () => {
                     navigate('/');
                 } else {
                     setError(result.payload.result);
-                    console.log(result.payload ? result.payload.result : result.error.message);
+                    // console.log(result.payload ? result.payload.result : result.error.message);
                     // console.log(error);
                 }
             })

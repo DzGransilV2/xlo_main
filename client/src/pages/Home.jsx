@@ -10,7 +10,7 @@ const Home = () => {
 
   // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
   const token = JSON.parse(localStorage.getItem('token'));
-  console.log(token);
+  // console.log(token);
   // Function to fetch posts
   const fetchPosts = async () => {
     try {
