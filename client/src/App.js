@@ -12,26 +12,23 @@ import SubProfile from './pages/SubProfile';
 function App() {
   return (
     <div className='flex items-center justify-center w-screen h-screen'>
-      <div className='container  h-full'>
-          <Header/>
-          <main className='flex gap-5' style={{minHeight:"calc(100% - 13.0625rem - 2.5rem)"}}>
-            <aside className='w-[12.5rem]'><Navbar/></aside>
-            <section className='w-full mx-5 mb-[6.25rem]'>
-              {/* <Home/> */}
-              <Routes>
-                {/* <Route element={<PrivateComponents/>} > */}
-                <Route path="/" element={<Navigate to='/home'/>}/>
-                <Route path="/home" element={<Home/>}/>
-                <Route path="/card/:id" element={<CardDetails/>}/>
-                <Route path="/profile" element={<Profile/>}/>
-                <Route path="/user/profile/:id" element={<SubProfile/>}/>
-                {/* </Route> */}
-              </Routes>
-              {/* <CardDetails/> */}
-              {/* <Profile/> */}
-            </section>
-          </main>
-          <Footer/>
+      <div className='container h-full px-4 md:px-0'>
+        <Header />
+        <main className='flex flex-col-reverse md:flex-row gap-5' style={{ minHeight: "calc(100% - 13.0625rem - 2.5rem)" }}>
+          <aside className='sticky bottom-[10%] z-[1] left-[17%] md:relative md:z-0 md:left-0 md:bottom-0 w-fit md:w-[12.5rem]'>
+            <Navbar />
+          </aside>
+          <section className='w-full mx-0 md:mx-5 mb-[6.25rem]'>
+            <Routes>
+              <Route path="/" element={<Navigate to='/home' />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/card/:id" element={<CardDetails />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/user/profile/:id" element={<SubProfile />} />
+            </Routes>
+          </section>
+        </main>
+        <Footer />
       </div>
     </div>
   );

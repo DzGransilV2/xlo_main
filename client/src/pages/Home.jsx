@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <section className='w-full flex flex-col gap-5 flex-wrap'>
       <span className='font-semibold text-2xl'>Fresh recommendations</span>
-      <div className='flex gap-5 flex-wrap'>
+      <div className='flex gap-5 justify-center flex-wrap'>
         {posts.length > 0 ? (
           posts.map((post, index) => (
             <Card key={index} post={post} />

@@ -50,3 +50,14 @@
   max-width: 100px; /* Adjust this value based on the length of your longest label */
   opacity: 1;
 }
+
+@media (max-width: 640px) {
+  .nav-text {
+    display: none; /* Don't show the nav-text on mobile */
+  }
+  .navbar{
+    top: 80%;
+    z-index: 1;
+    width: 272px;
+  }
+}

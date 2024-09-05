@@ -19,8 +19,8 @@ const Navbar = () => {
   // const id = userObj._id;
 
   return (
-    <nav className='navbar bg-myGrey rounded-[0.625rem] group'>
-      <ul className='flex flex-col gap-5 p-[0.5rem]'>
+    <nav className='navbar bg-myGrey md:border-none border-2 border-white rounded-[0.625rem] group'>
+      <ul className='flex flex-row md:flex-col gap-5 p-[0.5rem]'>
         <li className={`nav-item text-hover ${activeLink==='home'?'active': ''}`}>
           <Link onClick={()=>handleSetActiveLink('home')} to='/home' className='nav-item'>
             <span><HomeIcon height={24} width={24} /></span>
