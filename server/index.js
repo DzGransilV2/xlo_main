@@ -17,13 +17,14 @@ const storage = getFirebaseStorage();
 
 app.use(express.json());
 app.use(cors({
-    origin: 'https://xlo-main.vercel.app',
+    // origin: 'https://xlo-main.vercel.app',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Handle preflight requests
-app.options('*', cors());
+// app.options('*', cors());
 
 const upload = multer({ storage: multer.memoryStorage() });
 
