@@ -24,7 +24,7 @@ app.use(cors({
 }));
 
 // Handle preflight requests
-// app.options('*', cors());
+app.options('*', cors());
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -32,6 +32,10 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.get('/', (req, res)=>{
     res.json("Welcome to XLO");
 })
+
+app.post('/test', (req, res) => {
+    res.json("Test route working");
+});
 
 
 app.post('/signup', upload.single('userpic'), async (req, res) => {
