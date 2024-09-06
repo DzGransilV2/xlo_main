@@ -29,6 +29,11 @@ app.use(cors({
 const upload = multer({ storage: multer.memoryStorage() });
 
 
+app.get('/', (req, res)=>{
+    res.json("Welcome to XLO");
+})
+
+
 app.post('/signup', upload.single('userpic'), async (req, res) => {
     try {
         if (req.body && req.file) {
