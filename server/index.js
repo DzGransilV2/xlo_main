@@ -198,3 +198,5 @@ app.get('/posts/:id', authenticateToken, async (req, res) => {
 // app.listen(8000, function () {
 //     console.log("Server started on http://localhost:8000/");
 // });
+
+module.exports = app;
