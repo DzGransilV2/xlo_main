@@ -24,7 +24,6 @@ const CardDetails = () => {
   const [isChecked, setIsChecked] = React.useState(false);
 
   const { id } = useParams();
-  const canvasRef = useRef(null);
 
   const customIcon = L.icon({
     iconUrl: 'https://img.icons8.com/?size=100&id=13800&format=png&color=000000',

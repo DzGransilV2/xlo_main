@@ -88,7 +88,7 @@ const SignUp = () => {
         >
             <div className="flex flex-col justify-center items-center space-y-2">
                 <h2 className="text-2xl font-medium text-slate-700">Sign Up</h2>
-                <p className="text-black">Enter details below.</p>
+                <p className="text-black">Enter fake details below.</p>
             </div>
             <form className="w-full mt-4 space-y-3" onSubmit={signupData} encType="multipart/form-data">
                 <div>
