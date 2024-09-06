@@ -4,14 +4,11 @@ import axios from 'axios';
 import { hostname } from '../config';
 
 const Home = () => {
-  // State to hold posts data
+
   const [posts, setPosts] = useState([]);
 
-
-  // const token = localStorage.getItem('token').replace(/^"(.*)"$/, '$1');
   const token = JSON.parse(localStorage.getItem('token'));
-  // console.log(token);
-  // Function to fetch posts
+
   const fetchPosts = async () => {
     try {
       const response = await axios.get(`${hostname}/posts`, {
@@ -19,13 +16,18 @@ const Home = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-      setPosts(response.data);
+      if (Array.isArray(response.data)) {
+        setPosts(response.data);
+      } else {
+        console.error('Unexpected data format:', response.data);
+        setPosts([]);
+      }
     } catch (error) {
       console.error('Error fetching posts:', error);
+      setPosts([]);
     }
   };
 
-  // useEffect to fetch posts on component mount
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -39,7 +41,10 @@ const Home = () => {
             <Card key={index} post={post} />
           ))
         ) : (
-          <p>Loading...</p>
+          <div className=" inset-0 flex items-center justify-center bg-white">
+            <div className="spinner border-t-4 border-black rounded-full w-16 h-16 animate-spin"></div>
+            <p className="ml-4">Loading...</p>
+          </div>
         )}
       </div>
     </section>

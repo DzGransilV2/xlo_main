@@ -134,7 +134,7 @@ const CardDetails = () => {
                 <Canvas splat={post.splatFileURL} />
               }
             </div>
-            <div className='w-[380px] h-fit md:w-[431px] justify-center md:justify-normal md:h-[490px] rounded-myRound flex gap-5'>
+            <div className='w-[380px] h-fit md:w-[380px] justify-center md:justify-normal md:h-[490px] rounded-myRound flex gap-5'>
               <div className='flex items-start h-fit flex-wrap gap-5'>
                 {post.propics.map((pic, index) => (
                   <div key={index} className='w-[75px] h-[75px] md:w-[150px] md:h-[150px] bg-myGrey rounded-myRound overflow-hidden'>

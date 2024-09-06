@@ -2,7 +2,7 @@ import React from 'react'
 import { ReactComponent as SaveIcon } from '../assets/svg/SaveSVG.svg';
 import { useNavigate } from 'react-router-dom';
 
-const Card = ({post}) => {
+const Card = ({ post }) => {
 
     const navigate = useNavigate();
     if (!post) return null;
@@ -11,13 +11,24 @@ const Card = ({post}) => {
         navigate(`/card/${id}`);
     }
 
+    const getDaysAgo = (dateString) => {
+        const currentDate = new Date();
+        const postDate = new Date(dateString);
+        const diffInTime = currentDate - postDate;
+        const daysAgo = Math.floor(diffInTime / (1000 * 60 * 60 * 24));
+        return daysAgo === 0 ? 'Today' : `${daysAgo} days ago`;
+    };
+
+    const postedDate = getDaysAgo(post.createdAt);
+
+
     return (
         <div onClick={cardClick} className='h-[18.75rem] w-[18rem] relative overflow-hidden rounded-myRound hover:shadow-myShadow'>
             <div className='bg-slate-600 w-full flex items-center justify-center overflow-hidden' style={{ height: 'calc(18.75rem - 5.7rem)' }}>
                 <div className='absolute top-5 right-5 bg-myGrey rounded-full h-[1.875rem] w-[1.875rem] flex items-center justify-center'>
                     <SaveIcon height={24} width={24} />
                 </div>
-                <img src={post.propics[0]} alt="thumbnail" className='h-full'/>
+                <img src={post.propics[0]} alt="thumbnail" className='h-full' />
             </div>
             <div className='w-full h-[8.6875rem] absolute top-[50.45%]'>
                 <div className='w-full absolute top-[10%]'>
@@ -28,7 +39,7 @@ const Card = ({post}) => {
                 <div className='w-full h-[6.25rem] absolute top-[34.9%] bg-myGrey rounded-myRound px-5 py-[0.625rem] flex flex-col gap-2'>
                     <span className='font-bold text-base'>{post.title}</span>
                     <span className='font-normal text-base'>{post.location.state}</span>
-                    <span className='font-thin text-xs self-end'>5 Days Ago</span>
+                    <span className='font-thin text-xs self-end'>{postedDate}</span>
                 </div>
             </div>
         </div>

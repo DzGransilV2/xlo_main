@@ -92,7 +92,7 @@ app.get('/users', authenticateToken, async (req, res) => {
 
 app.post('/post', authenticateToken, upload.fields([{ name: 'propics', maxCount: 6 }, { name: 'splatFile', maxCount: 1 }]), async (req, res) => {
     try {
-        console.warn(req.body, req.files); // Log body and files to ensure they are being passed correctly
+        // console.warn(req.body, req.files); // Log body and files to ensure they are being passed correctly
 
         if (req.body && req.files && req.files.propics && req.files.propics.length > 0) {
             // Parse the location JSON string back to an object
