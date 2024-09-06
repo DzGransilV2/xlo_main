@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cors({
     // origin: 'https://xlo-main.vercel.app',
     origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
