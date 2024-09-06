@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { hostname } from '../config';
+import { clientHostname, hostname } from '../config';
 import Card from './Card';
 
 const ProfileCard = ({ logout, UID }) => {
@@ -18,7 +18,7 @@ const ProfileCard = ({ logout, UID }) => {
   }, [userObject]);
 
   const share = () => {
-    const url = window.location.href;
+    const url = `${clientHostname}/user/profile/${userObject._id}`;
     navigator.clipboard.writeText(url).then(() => {
       alert('URL copied to clipboard!');
     }).catch(err => {

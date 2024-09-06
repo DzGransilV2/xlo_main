@@ -359,9 +359,9 @@ const Form = () => {
 
     return (
         /* From Uiverse.io by themrsami */
-        <div className="flex w-fit flex-col items-center justify-center h-fit">
-            <div className="w-fit  bg-myGrey rounded-myRound shadow-myShadow p-6">
-                <h2 className="text-2xl font-bold mb-4">POST your CAR</h2>
+        <div className="flex w-fit h-full flex-col items-center justify-center">
+            <div className="w-fit md:h-fit h-[60%] overflow-y-auto bg-myGrey rounded-myRound shadow-myShadow p-6">
+                <h2 className="text-xl font-bold mb-4">POST your CAR</h2>
                 <form className="flex flex-col items-center justify-between w-fit" encType="multipart/form-data" onSubmit={postData}>
                     <div className='flex w-fit gap-5 items-center justify-evenly flex-wrap'>
                         <div className='flex flex-col w-[295px]'>

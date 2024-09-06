@@ -126,8 +126,8 @@ const CardDetails = () => {
     <div className='flex flex-col items-center justify-center gap-5 w-full h-auto'>
       {post && (
         <>
-          <div className='flex gap-5'>
-            <div className='relative w-[829px] h-[490px] flex items-center justify-center overflow-hidden bg-myGrey rounded-myRound'>
+          <div className='flex items-center flex-col md:flex-row gap-5'>
+            <div className='relative w-[380px] h-[300px] md:w-[829px] md:h-[490px] flex items-center justify-center overflow-hidden bg-myGrey rounded-myRound'>
               {post.splatFileURL && <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />}
               {!isChecked ?
                 <img className='h-full' src={newMainImg} alt="main-pic" />
@@ -135,58 +135,58 @@ const CardDetails = () => {
                 <Canvas splat={post.splatFileURL} />
               }
             </div>
-            <div className='w-[431px] h-[490px] rounded-myRound flex gap-5'>
-              <div className='flex h-fit flex-wrap gap-5'>
+            <div className='w-[380px] h-fit md:w-[431px] justify-center md:justify-normal md:h-[490px] rounded-myRound flex gap-5'>
+              <div className='flex items-start h-fit flex-wrap gap-5'>
                 {post.propics.map((pic, index) => (
-                  <div key={index} className='w-[150px] h-[150px] bg-myGrey rounded-myRound overflow-hidden'>
+                  <div key={index} className='w-[75px] h-[75px] md:w-[150px] md:h-[150px] bg-myGrey rounded-myRound overflow-hidden'>
                     <img className='h-full w-full object-cover' onClick={() => storeURL(pic)} src={pic} alt={`sub-pic-${index}`} />
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <div className='flex gap-5'>
-            <div className='w-[829px] h-auto flex flex-col gap-5 bg-myGrey rounded-myRound px-5 py-[15px]'>
+          <div className='flex flex-col md:flex-row gap-5'>
+            <div className='w-[380px] md:w-[829px] h-auto flex flex-col gap-5 bg-myGrey rounded-myRound px-5 py-[15px]'>
               <div>
-                <span className='font-bold text-2xl'>{post.title}</span>
+                <span className='font-bold text-xl'>{post.title}</span>
               </div>
               <div className='flex flex-wrap gap-5'>
-                <div className='flex gap-[5px] items-center justify-center text-xl'>
+                <div className='flex gap-[5px] items-center justify-center text-lg'>
                   <span className='font-semibold'>Owner:</span><span className='font-normal'>{post.owner}</span>
                 </div>
-                <div className='flex gap-[5px] items-center justify-center text-xl'>
+                <div className='flex gap-[5px] items-center justify-center text-lg'>
                   <span className='font-semibold'>Location:</span><span className='font-normal'>{post.location.city}</span>
                 </div>
-                <div className='flex gap-[5px] items-center justify-center text-xl'>
+                <div className='flex gap-[5px] items-center justify-center text-lg'>
                   <span className='font-semibold'>Posted:</span><span className='font-normal'>{postedDate}</span>
                 </div>
-                <div className='flex gap-[5px] items-center justify-center text-xl'>
+                <div className='flex gap-[5px] items-center justify-center text-lg'>
                   <span className='font-semibold'>Fuel:</span><span className='font-normal'>{post.fuel}</span>
                 </div>
-                <div className='flex gap-[5px] items-center justify-center text-xl'>
+                <div className='flex gap-[5px] items-center justify-center text-lg'>
                   <span className='font-semibold'>Mileage:</span><span className='font-normal'>{post.mileage} km</span>
                 </div>
-                <div className='flex gap-[5px] items-center justify-center text-xl'>
+                <div className='flex gap-[5px] items-center justify-center text-lg'>
                   <span className='font-semibold'>Transmission:</span><span className='font-normal'>{post.transmission}</span>
                 </div>
-                <div className='flex gap-[5px] items-center justify-center text-xl'>
+                <div className='flex gap-[5px] items-center justify-center text-lg'>
                   <span className='font-semibold'>Manufactured:</span><span className='font-normal'>{manufacturedDate}</span>
                 </div>
               </div>
             </div>
-            <div className='w-[431px] h-[155px] bg-myGrey rounded-myRound flex flex-col items-center justify-center gap-5 py-[30px] px-[95px]'>
-              <span className='font-bold text-2xl'>₹ {post.price}</span>
+            <div className='w-[380px] h-[155px] bg-myGrey rounded-myRound flex flex-col items-center justify-center gap-5 py-[30px] px-[95px]'>
+              <span className='font-bold text-xl'>₹ {post.price}</span>
               <Link to={`/user/profile/${post.uid}`} className='w-[240px] h-10 rounded-myRound bg-white font-semibold text-base px-14 py-2'>Chat with Seller</Link>
             </div>
           </div>
-          <div className='flex gap-5 text-xl'>
-            <div className='px-5 py-[15px] w-[829px] break-words h-auto flex flex-wrap flex-col gap-5 bg-myGrey rounded-myRound'>
+          <div className='flex flex-col md:flex-row gap-5 text-lg'>
+            <div className='px-5 py-[15px] w-[380px] md:w-[829px] break-words h-auto flex flex-wrap flex-col gap-5 bg-myGrey rounded-myRound'>
               <span className='font-semibold'>Description</span>
               <span className='font-normal'>
                 {post.description}
               </span>
             </div>
-            <div className='w-[431px] h-[306px] overflow-hidden bg-myGrey rounded-myRound'>
+            <div className='w-[380px] h-[306px] overflow-hidden bg-myGrey rounded-myRound'>
               <MapContainer
                 center={[coordinates.lat, coordinates.lon]}
                 zoom={15}

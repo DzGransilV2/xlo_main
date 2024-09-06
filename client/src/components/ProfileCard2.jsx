@@ -94,7 +94,7 @@ const ProfileCard2 = ({ logout, UID }) => {
                     </span>
                 </div>
             </div>
-            <div className='flex flex-wrap h-auto gap-5'>
+            <div className='flex flex-wrap justify-center h-auto gap-5'>
                 {post && post.length > 0 ? (
                     post.map((item, index) => (
                         <Card key={index} post={item} />

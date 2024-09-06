@@ -6,7 +6,7 @@ const Header = () => {
 
 
     return (
-        <div className='sticky top-0 z-[1]'>
+        <div className='sticky top-0 z-[2]'>
             <header className='bg-myBackground h-[13.0625rem] flex items-center justify-between font-myPoppins relative'>
                 <div className='flex items-center justify-between w-full gap-5 absolute top-[3.125rem]'>
                     <Link to='/'>

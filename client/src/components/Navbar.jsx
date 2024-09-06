@@ -1,25 +1,31 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { ReactComponent as HomeIcon } from '../assets/svg/HomeSVG.svg';
 import { ReactComponent as LocationIcon } from '../assets/svg/LocationSVG.svg';
 import { ReactComponent as CategoriesIcon } from '../assets/svg/CategoriesSVG.svg';
 import { ReactComponent as UserIcon } from '../assets/svg/UserSVG.svg';
 import '../styles/navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
 
   const [activeLink, setActiveLink] = useState('');
+  const location = useLocation();
 
   const handleSetActiveLink = (link) => {
     setActiveLink(link);
   };
 
-  // const user = localStorage.getItem("user");
-  // const userObj = JSON.parse(user);
-  // const id = userObj._id;
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === '/home') {
+      setActiveLink('home');
+    } else if (path === '/profile') {
+      setActiveLink('profile');
+    }
+  }, [location]);
 
   return (
-    <nav className='navbar bg-myGrey md:border-none border-2 border-white rounded-[0.625rem] group'>
+    <nav className='navbar bg-myGrey md:border-none border-2 border-white rounded-[0.625rem] md:shadow-none shadow-myShadow group'>
       <ul className='flex flex-row md:flex-col gap-5 p-[0.5rem]'>
         <li className={`nav-item text-hover ${activeLink==='home'?'active': ''}`}>
           <Link onClick={()=>handleSetActiveLink('home')} to='/home' className='nav-item'>

@@ -10,7 +10,7 @@ const Post = () => {
 
     return (
         <div className='flex items-center justify-center w-screen h-screen'>
-            <section className='container relative w-full h-full flex flex-col items-center justify-center gap-5'>
+            <section className='container overflow-hidden relative w-full h-full flex flex-col items-center justify-center gap-5'>
                 {/* <span>Cars, Mobiles and Bikes</span> */}
                 <div className='w-full flex absolute top-[10%]'>
                     <Link to='/' className='bg-myGrey px-4 h-[3.125rem] flex items-center justify-center gap-[0.3125rem] rounded-[0.625rem] hover:shadow-myShadow hover:cursor-pointer'>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as SPLAT from "https://cdn.jsdelivr.net/npm/gsplat@latest";
 
-const Canvas = ({splat}) => {
+const Canvas = ({ splat }) => {
     // State for loading
     const [loading, setLoading] = useState(true);
 
@@ -11,6 +11,8 @@ const Canvas = ({splat}) => {
     useEffect(() => {
         // Initialize SPLAT renderer and scene only when the component is mounted
         const canvas = canvasRef.current;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
 
         if (!canvas) return;
 
@@ -27,14 +29,17 @@ const Canvas = ({splat}) => {
                 await SPLAT.Loader.LoadAsync(url, scene, null);
 
                 // Set initial renderer size
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                // renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setSize(width, height);
+
 
                 // Set loading to false after loading completes
                 setLoading(false);
 
                 // Handle window resize
                 const handleResize = () => {
-                    renderer.setSize(window.innerWidth, window.innerHeight);
+                    // renderer.setSize(window.innerWidth, window.innerHeight);
+                    renderer.setSize(width, height);
                 };
 
                 window.addEventListener("resize", handleResize);
