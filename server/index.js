@@ -16,11 +16,18 @@ const storage = getFirebaseStorage();
 
 
 app.use(express.json());
-app.use(cors({
+// Define CORS options
+const corsOptions = {
     origin: 'https://xlo-main.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+};
+
+// Apply CORS to specific routes
+app.use('/api', cors(corsOptions));
+
+// Apply CORS to other routes or globally
+app.use(cors(corsOptions));
 
 // Handle preflight requests
 app.options('*', cors());
