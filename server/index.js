@@ -16,8 +16,8 @@ const storage = getFirebaseStorage();
 
 
 app.use(cors({
+    // origin: 'https://xlo-main.vercel.app',
     origin: '*',
-    // origin: '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
