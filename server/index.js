@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 
 
 // Middleware
+app.options('*', cors(corsOptions)); // Ensure this is above other routes
 app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -219,7 +220,6 @@ app.get('/posts/:id', authenticateToken, async (req, res) => {
 //     console.log("Server started on http://localhost:8000/");
 // });
 
-app.options('*', cors(corsOptions)); // Ensure this is above other routes
 
 
 module.exports = app;
