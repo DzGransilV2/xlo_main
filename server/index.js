@@ -16,12 +16,12 @@ const storage = getFirebaseStorage();
 
 
 app.use(cors({
-    // origin: 'https://xlo-main.vercel.app',
-    origin: '*',
+    origin: 'https://xlo-main.vercel.app',
+    // origin: '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-app.options('*', cors());
+
 app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -206,5 +206,7 @@ app.get('/posts/:id', authenticateToken, async (req, res) => {
 // app.listen(8000, function () {
 //     console.log("Server started on http://localhost:8000/");
 // });
+
+app.options('*', cors());
 
 module.exports = app;
