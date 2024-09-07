@@ -24,6 +24,15 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use((req, res, next) => {
+    console.log('Request Headers:', req.headers);
+    res.on('finish', () => {
+        console.log('Response Headers:', res.getHeaders());
+    });
+    next();
+});
+
+
 // Middleware
 app.use(express.json());
 
@@ -210,6 +219,7 @@ app.get('/posts/:id', authenticateToken, async (req, res) => {
 //     console.log("Server started on http://localhost:8000/");
 // });
 
-app.options('*', cors());
+app.options('*', cors(corsOptions)); // Ensure this is above other routes
+
 
 module.exports = app;
