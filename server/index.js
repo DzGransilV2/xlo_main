@@ -56,6 +56,10 @@ app.post('/test', (req, res) => {
     res.json("Test route working");
 });
 
+// Serve a default favicon
+app.get('/favicon.png', (req, res) => {
+    res.status(204).end();  // Respond with a "No Content" status
+});
 
 app.post('/signup', upload.single('userpic'), async (req, res) => {
     try {
