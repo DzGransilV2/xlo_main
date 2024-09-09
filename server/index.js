@@ -24,13 +24,13 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', "https://xlo-main.vercel.app");
-    res.header('Access-Control-Allow-Headers', true);
-    // res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    next();
-});
+// app.use(function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', "https://xlo-main.vercel.app");
+//     res.header('Access-Control-Allow-Headers', true);
+//     // res.header('Access-Control-Allow-Credentials', true);
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     next();
+// });
 
 
 // Middleware
@@ -216,9 +216,9 @@ app.get('/posts/:id', authenticateToken, async (req, res) => {
 });
 
 
-// app.listen(8000, function () {
-//     console.log("Server started on http://localhost:8000/");
-// });
+app.listen(8000, function () {
+    console.log("Server started on http://localhost:8000/");
+});
 
 
 
