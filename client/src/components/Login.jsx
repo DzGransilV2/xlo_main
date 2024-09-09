@@ -11,7 +11,7 @@ const Login = () => {
 
     const [error, setError] = useState("");
 
-    const {loading} = useSelector((state)=>state.auth);
+    const { loading } = useSelector((state) => state.auth);
 
     const navigate = useNavigate();
 
@@ -38,15 +38,19 @@ const Login = () => {
 
         dispatch(login(userCredential)).then(
             (result) => {
-                // console.log("Payload",result.payload);
-                if (!result.payload.result) {
-                    setUname("");
-                    setPassword("");
-                    setError("")
-                    navigate('/');
-                }else{
-                    setError(result.payload.result);
-                    // console.log(result.payload.result)
+                if (result.payload) {
+                    // console.log("Payload",result.payload);
+                    if (!result.payload.result) {
+                        setUname("");
+                        setPassword("");
+                        setError("")
+                        navigate('/');
+                    } else {
+                        setError(result.payload.result);
+                        // console.log(result.payload.result)
+                    }
+                } else {
+                    setError("An error occurred while logging in. Please try again.");
                 }
             }
         );
@@ -109,7 +113,7 @@ const Login = () => {
                     name="login"
                     type="submit"
                 >
-                    {loading?'Loading...':'Login'}
+                    {loading ? 'Loading...' : 'Login'}
                 </button>
                 <p className="flex justify-center space-x-1">
                     <span className="text-slate-700"> Don't have an account? </span>
