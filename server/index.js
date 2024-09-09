@@ -22,6 +22,7 @@ app.use(cors({
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
+            console.log("Origin", origin)
         } else {
             callback(new Error('Not allowed by CORS'));
         }
@@ -223,9 +224,9 @@ app.get('/posts/:id', authenticateToken, async (req, res) => {
 });
 
 
-app.listen(8000, function () {
-    console.log("Server started on http://localhost:8000/");
-});
+// app.listen(8000, function () {
+//     console.log("Server started on http://localhost:8000/");
+// });
 
 
 
