@@ -41,7 +41,7 @@ app.use(cors({
 
 
 // Middleware
-app.options('*', cors()); // Ensure this is above other routes
+// app.options('*', cors()); // Ensure this is above other routes
 app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
