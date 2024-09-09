@@ -16,13 +16,20 @@ const storage = getFirebaseStorage();
 
 
 // CORS configuration
-const corsOptions = {
-    origin: 'https://xlo-main.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-};
+const allowedOrigins = ['http://localhost:8000', 'https://xlo-main.vercel.app'];
 
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 
 // app.use(function (req, res, next) {
 //     res.header('Access-Control-Allow-Origin', "https://xlo-main.vercel.app");
@@ -34,7 +41,7 @@ app.use(cors(corsOptions));
 
 
 // Middleware
-app.options('*', cors(corsOptions)); // Ensure this is above other routes
+app.options('*', cors()); // Ensure this is above other routes
 app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
