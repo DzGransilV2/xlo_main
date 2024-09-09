@@ -11,8 +11,7 @@
       "src": "/(.*)",
       "dest": "/index.js",
       "methods": [
-        "GET",
-        "POST"
+        "GET", "POST", "PUT", "DELETE", "OPTIONS"
       ]
     }
   ],
@@ -22,11 +21,11 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "*"
+          "value": "https://xlo-main.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",
-          "value": "GET,POST,PUT,DELETE,OPTIONS"
+          "value": "GET, POST, 'PUT', 'DELETE', 'OPTIONS'"
         },
         {
           "key": "Access-Control-Allow-Headers",
