@@ -16,7 +16,7 @@ const storage = getFirebaseStorage();
 
 
 // CORS configuration
-const allowedOrigins = ['http://localhost:3000','https://xlo-main.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://xlo-main.vercel.app'];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -26,22 +26,21 @@ app.use(cors({
             callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Ensure OPTIONS is included
     allowedHeaders: ['Content-Type', 'Authorization'],
+    // credentials: true  // Allow credentials if needed
 }));
 
+// Explicitly handle OPTIONS requests (for preflight)
+app.options('*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.sendStatus(200);
+});
 
-// app.use(function (req, res, next) {
-//     res.header('Access-Control-Allow-Origin', "https://xlo-main.vercel.app");
-//     res.header('Access-Control-Allow-Headers', true);
-//     // res.header('Access-Control-Allow-Credentials', true);
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//     next();
-// });
-
-
-// Middleware
 // app.options('*', cors()); // Ensure this is above other routes
+
 app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
