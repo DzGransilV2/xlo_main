@@ -16,7 +16,7 @@ const storage = getFirebaseStorage();
 
 
 // CORS configuration
-const allowedOrigins = ['http://localhost:8000', 'https://xlo-main.vercel.app'];
+const allowedOrigins = ['http://localhost:8000','https://xlo-main.vercel.app', 'http://localhost:3000', 'https://xlo-main-server.vercel.app'];
 
 app.use(cors({
     origin: function (origin, callback) {
