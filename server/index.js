@@ -18,29 +18,29 @@ const storage = getFirebaseStorage();
 // CORS configuration
 
 // const allowedOrigins = ['http://localhost:3000', 'https://xlo-main.vercel.app'];
-const allowedOrigins = '*';
+// const allowedOrigins = '*';
 
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-            // console.log("Origin", origin)
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Ensure OPTIONS is included
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    // credentials: true  // Allow credentials if needed
-}));
+// app.use(cors({
+//     origin: function (origin, callback) {
+//         if (!origin || allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//             // console.log("Origin", origin)
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Ensure OPTIONS is included
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     // credentials: true  // Allow credentials if needed
+// }));
 
-// Explicitly handle OPTIONS requests (for preflight)
-app.options('*', (req, res) => {
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.sendStatus(200);
-});
+// // Explicitly handle OPTIONS requests (for preflight)
+// app.options('*', (req, res) => {
+//     res.header('Access-Control-Allow-Origin', req.headers.origin);
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//     res.sendStatus(200);
+// });
 
 
 // app.options('*', cors()); // Ensure this is above other routes
