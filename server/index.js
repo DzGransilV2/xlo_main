@@ -25,6 +25,7 @@ app.use(cors({
         } else {
             callback(new Error('Not allowed by CORS'));
         }
+        console.log('Request Origin:', origin);
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Ensure OPTIONS is included
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -37,7 +38,9 @@ app.options('*', (req, res) => {
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.sendStatus(200);
+    console.log('Request Origin:', req.headers.origin);
 });
+
 
 // app.options('*', cors()); // Ensure this is above other routes
 
