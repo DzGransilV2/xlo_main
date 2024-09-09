@@ -53,17 +53,6 @@ const Login = () => {
 
     }
 
-    const userData = {"_id": "66db1d8773424607c1a0deda",
-        "uname": "dz",
-        "email": "asfas@gmal.com",
-        "userpic": "https://firebasestorage.googleapis.com/v0/b/xlomain.appspot.com/o/userpics%2F64697d422c453e1976381812a55e8d81_20181209_202141.jpg?alt=media&token=80702fb1-cf7c-4d0a-97fd-d5f9df97c157",
-        "__v": 0}
-    localStorage.setItem("user", JSON.stringify(userData));
-    console.log(userData)
-    const auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ZGIxZDg3NzM0MjQ2MDdjMWEwZGVkYSIsInVuYW1lIjoiZHoiLCJlbWFpbCI6ImFzZmFzQGdtYWwuY29tIiwidXNlcnBpYyI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2IveGxvbWFpbi5hcHBzcG90LmNvbS9vL3VzZXJwaWNzJTJGNjQ2OTdkNDIyYzQ1M2UxOTc2MzgxODEyYTU1ZThkODFfMjAxODEyMDlfMjAyMTQxLmpwZz9hbHQ9bWVkaWEmdG9rZW49ODA3MDJmYjEtY2Y3Yy00ZDBhLTk3ZmQtZDVmOWRmOTdjMTU3IiwiX192IjowfSwiaWF0IjoxNzI1ODg5MjkzLCJleHAiOjE3MjY0OTQwOTN9.SVjAK-1KlJbCXhRNHHOCS5_MErma53-oqQlk_J-wFDg";
-    localStorage.setItem("token", JSON.stringify(auth));
-    console.log(auth)
-
     useEffect(() => {
         if (localStorage.getItem("user")) {
             navigate('/');
